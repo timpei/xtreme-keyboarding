@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+   <head>
+      <link href='http://fonts.googleapis.com/css?family=Inconsolata:700' rel='stylesheet' type='text/css'>
+      <style>
+         body{
+            background-image:url('background1.jpg');
+         }
+
+         img{
+            position:relative;
+            top:200px;
+            width:400px;
+            height:auto;
+         }
+
+         button{
+            height:60px;
+            width:300px;
+            border-radius:5px;
+            border-color:white;
+            font-family: 'Inconsolata', sans-serif;
+            font-size:35px;
+            display:block;
+            margin:25px 0px 25px 0px;
+            background-color:gray;
+            color:white;
+            position:relative;
+            top:200px;
+            
+         }
+      </style>
+   </head>
+   <body>
+      <center>
+         <img src="typer.gif"/>
+         <button id="playButton">Play</button>
+         <button id="rulesButton">Rules</button>
+      </center>
+
+      <script>
+         document.getElementById("playButton").onclick = function(){
+            window.open("GUI2.html","page2");
+         };
+      </script>
+   </body>
+</html>
