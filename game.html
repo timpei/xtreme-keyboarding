@@ -10,12 +10,9 @@
          }
 
          #element24{
-             font-size:80px;
-             padding:0px;
-             margin:0px;
              position:relative;
-             bottom:90px;
-             right:21px;
+             left:650px;
+             bottom:235px;
          }
 
          h1{
@@ -26,9 +23,10 @@
 
         #title{
             position:relative;
-            left:620px;
+            font-size:60px;
             width:500px;
-            bottom:195px;
+            right:30px;
+            bottom:120px;
         }
 
          #container{
@@ -54,9 +52,9 @@
              border-left:50px solid transparent;
              border-right:50px solid transparent;
              height:0;
-             width:150px;
+             width:450px;
              position:relative;
-             right:400px;
+             right:300px;
          }
 
          .healthBar{
@@ -92,6 +90,46 @@
             top:1px;
          }
 
+         #other-player{
+            font-family: 'Inconsolata',sans-serif;
+            position:relative;
+            top:50px;
+         }
+
+         #sentence1{
+            color:white;
+            font-size:100px;
+            position:relative;
+            text-shadow:0 0 10px #00CC99;
+         }
+
+         #anxious{
+            text-shadow:0 0 60px red;
+         }
+
+         #dw{
+            font-size:60px;
+         }
+            
+
+         #sentence2{
+            font-size:30px;
+         }
+
+         #sentence3{
+            font-size:30px;
+            color:white;
+            text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+         }
+
+         #sentence4{
+            font-size:30px;
+         }
+
+         img{
+            height:300px;
+            width:auto;
+         }
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
@@ -101,34 +139,39 @@
       <div id="outerwrapper">
       <div id="header"></div>
       <div id="trapezoid">
-          <h1 id="element24">&lt;24/&gt;</h1>
           <h1 id="title">XTreme Typing</h1>
+          <h1 id="element24">&lt;24/&gt;</h1>
       </div>
       </div>
 
       <div id='other-player' style='display:none'>
-        Waiting for another player to join.<br>
-        Send them this link to play:<br>
-        <div id='game-link'><a href='{{ game_link }}'>{{ game_link }}</a></div>
+        <div id="sentence1"><span id="anxious">ANXIOUS</span> FINGERS?<div id="dw">Don't worry!</div></div><br>
+        <div id="sentence2">Copy and paste this link to a friend:</div>
+        <div id='sentence3'>{{ game_link }}</div><br>
+        <img src="assets/blueTyper.png"/>
+        <div id="sentence4">We'll load the game automatically once your opponent joins.</div>
       </div>
 
-      <div id="container">
-         <button id="test">click</button>
-         <div class="healthBar first" id="firstBar"><div class="healthInner first" id="firstInnerBar" style="width:100%"></div></div>
-         <div class="healthBar second" id="secondBar"><div class="healthInner second" id="secondInnerBar" style="width:100%"></div></div>
+      <div id="container" style="display:none">
+         <div class="healthBar first" id="firstBar">
+            <div class="healthInner first" id="firstInnerBar" style="width:100%"></div>
+         </div>
+         <div class="healthBar second" id="secondBar">
+            <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
+         </div>
          <div class="textbox first" id="firstBox"></div>
          <div class="textbox second" id="secondBox"></div>
          </div>
       </center>
       <script>
-         $("#test").click(function(evt){
-            $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
-         });
 
-         $("#test").click(function(evt){
-            $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
-         });
-
+         function decreaseHealth(player){ //player is an integer; either 1 or 2
+            if(player == 1){
+               $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
+            } else {
+               $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
+            }
+         }
 
       </script>
       <script type='text/javascript'>
