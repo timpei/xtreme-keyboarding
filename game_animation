@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+
+      body {
+        margin: 10 px;
+        padding: 10 px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div id="container"></div>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
+    <script defer="defer">
+
+ var para = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+      var words = para.split(" ");
+
+      window.requestAnimFrame = (function(callback) {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+        function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 578,
+        height: 600
+      });
+      var layer = new Kinetic.Layer();
+
+          var xmult = 0;
+          var ymult = 0;
+
+
+      for(var n = 0; n < para.length; n++) {        
+  
+          //every time maxchar is reached, make a new line
+          if( (n+1)%25 == 0 ) {
+              xmult = 1;
+              ymult++;
+          }
+          else {
+              xmult++;
+          }
+          var i = n;
+          var text = new Kinetic.Text({
+             x: xmult * 13,
+             y: ymult * 20,
+            fill: 'black',
+            text: para[i],
+            name: 'text',
+            fontSize: 20,
+            fontFamily: 'Courier'
+          });
+        layer.add(text);
+      }
+
+      stage.add(layer);
+
+      var alltext = stage.get('.text');
+
+      function myFunc(i) {
+        var anim = new Kinetic.Animation(function(frame) {
+          var word = alltext[i];    
+          var curY = word.getPosition.y;
+         
+          if(frame.time%1000 == 0) {
+            console.log(frame.time/1000);
+            word.setFill('red');
+          }
+          if( (i+1) == para.length)
+            anim.stop();
+
+          //word.setY(frame.time /6 + i * 50);
+          //if(word.getPosition().y > 500) {
+          //  word.setY(0);
+          //  word.setFill('red');
+         // }
+        
+      //group.setY(frame.time / 6);
+      //anim.stop();
+      }, layer);
+      }
+
+        for(var i=0; i< para.length; i++)
+        {
+              myFunc(i);
+        }
+
+      anim.start();
+/*
+      var anim = new Kinetic.Animation(function(frame) {
+        var alltext = stage.get('.text');
+
+        for(var i=0; i< para.length; i++)
+        {
+          var word = alltext[i];
+          
+          var curY = word.getPosition.y;
+         
+          if(frame.time%1000 == 0) {
+            console.log(frame.time/1000);
+            word.setFill('red');
+          }
+          if( (i+1) == para.length)
+            anim.stop();
+
+          //word.setY(frame.time /6 + i * 50);
+          //if(word.getPosition().y > 500) {
+          //  word.setY(0);
+          //  word.setFill('red');
+         // }
+        }
+      //group.setY(frame.time / 6);
+      //anim.stop();
+      }, layer);
+
+  */
+      
+
+    </script>
+  </body>
+</html>
