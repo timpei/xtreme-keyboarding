@@ -4,40 +4,52 @@
     <style>
 
       body {
-        margin: 10 px;
-        padding: 10 px;
+        margin: 0 px;
+        padding: 0 px;
       }
+      @font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Inconsolata'), local('Inconsolata'), url(http://themes.googleusercontent.com/static/fonts/inconsolata/v6/AIed271kqQlcIRSOnQH0yRbnBKKEOwRKgsHDreGcocg.woff) format('woff');
+}
     </style>
+   <div style="font-family:'Inconsolata'">&nbsp;</div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+ 
 
-    <div id="container"></div>
+<!-- <canvas id="canvas" ></canvas>  -->
+
+    <div id="container" ></div>
+  
+
     <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
+
+    
     <script defer="defer">
 
- var para = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
-      var words = para.split(" ");
+ var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+      //var words = generatedString.split(" ");
 
-      window.requestAnimFrame = (function(callback) {
-        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-        function(callback) {
-          window.setTimeout(callback, 1000 / 60);
-        };
-      })();
+
+
+
 
       var stage = new Kinetic.Stage({
         container: 'container',
         width: 578,
-        height: 600
+        height: 400
       });
+
       var layer = new Kinetic.Layer();
 
           var xmult = 0;
           var ymult = 0;
 
 
-      for(var n = 0; n < para.length; n++) {        
+      for(var n = 0; n < generatedString.length; n++) {        
   
           //every time maxchar is reached, make a new line
           if( (n+1)%25 == 0 ) {
@@ -52,17 +64,43 @@
              x: xmult * 13,
              y: ymult * 20,
             fill: 'black',
-            text: para[i],
+            text: generatedString[i],
             name: 'text',
             fontSize: 20,
-            fontFamily: 'Courier'
+            fontFamily: 'Courier',  //maybe Inconsolata
           });
         layer.add(text);
       }
 
       stage.add(layer);
 
+      var cur = 0;
+      var clear = false;
+
+      var red = new Kinetic.Animation(function(frame) {
+        var word = alltext[cur];  
+        word.setFill('green');
+        red.stop();
+        cur++;
+      }, layer );
+
+
       var alltext = stage.get('.text');
+
+             $(document).keypress(function(evt){
+               var keynum = evt.keyCode;
+               var typed = String.fromCharCode(keynum);
+               
+               if(typed == generatedString.charAt(0)) {
+                     
+                   red.start();
+                  generatedString = generatedString.substring(1);
+                  console.log(generatedString);
+                  //alert(frontString.fontcolor("blue"));
+               }
+               else
+                console.log('not correct!')
+            }); 
 
       function myFunc(i) {
         var anim = new Kinetic.Animation(function(frame) {
@@ -73,7 +111,7 @@
             console.log(frame.time/1000);
             word.setFill('red');
           }
-          if( (i+1) == para.length)
+          if( (i+1) == generatedString.length)
             anim.stop();
 
           //word.setY(frame.time /6 + i * 50);
@@ -87,12 +125,12 @@
       }, layer);
       }
 
-        for(var i=0; i< para.length; i++)
+        for(var i=0; i< generatedString.length; i++)
         {
               myFunc(i);
         }
 
-      anim.start();
+      //anim.start();
 /*
       var anim = new Kinetic.Animation(function(frame) {
         var alltext = stage.get('.text');

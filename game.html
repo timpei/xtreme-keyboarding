@@ -1,29 +1,76 @@
 <!doctype html>
 <html>
    <head>
+      <link href='http://fonts.googleapis.com/css?family=Inconsolata:700' rel='stylesheet' type='text/css'>
       <style>
          body{
-            background-image:url('assets/background1.jpg');
+             background-color:lightGrey;
          }
+
+         #element24{
+             font-size:80px;
+             padding:0px;
+             margin:0px;
+             position:relative;
+             bottom:90px;
+             right:21px;
+         }
+
+         h1{
+             font-family: 'Inconsolata',sans-serif;
+             color:white;
+             text-shadow:0 0 10px #00CC99;
+         }
+
+        #title{
+            position:relative;
+            left:760px;
+            width:500px;
+            bottom:195px;
+        }
 
          #container{
             border:thin solid white;
-            height:1000px;
-            width:1200px;
+            height:500px;
+            width:1000px;
+            position:relative;
+            top:30px;
+            background-color:gray;
+            margin:0px 0px 100px 0px;
+         }
+
+         #header{
+             width:auto;
+             height:50px;
+             background-color:gray;
+             margin:0px;
+             padding:0px;
+         }
+         
+         #trapezoid{
+             border-top:50px solid gray;
+             border-left:50px solid transparent;
+             border-right:50px solid transparent;
+             height:0;
+             width:150px;
+             position:relative;
+             left:100px;
          }
 
          .healthBar{
-            height:100px;
-            width:400px;
+            height:30px;
+            width:350px;
             background-color:white;
-            margin:100px 50px 0px 50px;
+            margin:50px 50px 0px 50px;
+            border-radius:10px;
          }
 
          .textbox{
-            height:600px;
-            width:400px;
+            height:300px;
+            width:350px;
             background-color:white;
-            margin:100px 50px 0px 50px;
+            margin:20px 50px 0px 50px;
+            border-radius:5px;
          }
 
          .first{
@@ -39,6 +86,11 @@
       <script src='/_ah/channel/jsapi'></script>
    </head>
    <body>
+      <div id="header"></div>
+      <div id="trapezoid">
+          <h1 id="element24">&lt;24/&gt;</h1>
+          <h1 id="title">XTreme Typing</h1>
+      </div>
       <center>
 
       <div id='other-player' style='display:none'>
@@ -47,7 +99,7 @@
         <div id='game-link'><a href='{{ game_link }}'>{{ game_link }}</a></div>
       </div>
 
-      <div id="container" style="display:none">
+      <div id="container">
          <div class="healthBar first" id="firstBar"></div>
          <div class="healthBar second" id="secondBar"></div>
          <div class="textbox first" id="firstBox"></div>
