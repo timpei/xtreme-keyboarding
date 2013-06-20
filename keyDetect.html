@@ -1,0 +1,78 @@
+<html>
+   <head>
+      <style>
+         #container{
+            border: thin dashed black;
+            height:400px;
+            width:350px;
+            font-size:15px;
+         }
+
+         textarea{
+             resize: none;
+         }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+   </head>
+   <body>
+       <textarea id="container">
+       </textarea>
+      <script type="text/javascript">
+         $(document).ready(function(){
+
+            var generatedString = '';
+            var frontString = '';
+            var time = setInterval(function(){
+                //$("#front").html(frontString.fontcolor("blue"));
+                //console.log($("#front"));
+                $("#container").val(frontString+generatedString+randomString());
+            },1000);
+
+            setTimeout(function(){clearInterval(time);},10000);
+
+            $(document).keypress(function(evt){
+               var keynum = evt.keyCode;
+               var typed = String.fromCharCode(keynum);
+               
+               if(typed == generatedString.charAt(0)) {
+                  
+                  frontString = frontString + generatedString.substring(0,1);
+                  generatedString = generatedString.substring(1);
+                  console.log(frontString + " " + generatedString);
+                  //alert(frontString.fontcolor("blue"));
+               }
+            });
+   
+            function randomString(){
+               var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+               var stringLength = 10;
+               var randomstring = '';
+               for (var i=0; i<stringLength; i++){
+                  var rnum = Math.floor(Math.random()*chars.length);
+                  randomstring+=chars.substring(rnum,rnum+1);
+               }
+               generatedString = generatedString + randomstring;
+               return randomstring;
+            }
+
+            /*function randomWord(){
+               var requestStr = "http://randomword.setgetgo.com/get.php";
+
+               $.ajax({
+                   type: "GET",
+                   url: requestStr,
+                   dataType: "jsonp",
+                   jsonpCallback: 'RandomWordComplete'
+               });
+           }
+
+           function RandomWordComplete(data){
+               console.log(data);
+               generatedString = generatedString + data.Word;
+               return data.Word;
+           }*/
+
+         });
+      </script>
+   </body>
+</html>
