@@ -3,6 +3,8 @@
    <head>
       <link href='http://fonts.googleapis.com/css?family=Inconsolata:700' rel='stylesheet' type='text/css'>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+      
+
       <style>
          body{
              background-color:lightGrey;
@@ -76,7 +78,8 @@
          }
 
          .first{
-            display:inline-block;
+           display:inline-block;
+           position:relative;
          }
 
          .second{
@@ -95,8 +98,11 @@
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
+    
+≈
+
    </head>
-   <body>
+   <body> 
       <center>
       <div id="outerwrapper">
       <div id="header"></div>
@@ -116,10 +122,105 @@
          <button id="test">click</button>
          <div class="healthBar first" id="firstBar"><div class="healthInner first" id="firstInnerBar" style="width:100%"></div></div>
          <div class="healthBar second" id="secondBar"><div class="healthInner second" id="secondInnerBar" style="width:100%"></div></div>
-         <div class="textbox first" id="firstBox"></div>
+         <div class="textbox first" id="firstBox"> 
+
+
+         </div>
          <div class="textbox second" id="secondBox"></div>
          </div>
       </center>
+
+
+  <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
+      <script defer="defer">
+
+  var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+
+      var stage = new Kinetic.Stage({
+        container: 'firstBox',
+        width: 350,
+        height: 300,
+      });
+      
+      var layer = new Kinetic.Layer();
+      var canvases = document.getElementsByTagName("canvas");
+
+
+          var xmult = 0;
+          var ymult = 0;
+
+//for each character in the string/block of test, create a canvas element thing
+      for(var n = 0; n < generatedString.length; n++) {        
+  
+          //every time maxchar is reached, make a new line
+          if( (n+1)%25 == 0 ) {
+              xmult = 1;
+              ymult++;
+          }
+          else {
+              xmult++;
+          }
+          var i = n;
+          var text = new Kinetic.Text({
+             x: xmult * 13,
+             y: ymult * 20,
+            fill: 'black',
+            text: generatedString[i],
+            name: 'text',
+            fontSize: 20,
+            fontFamily: 'Courier',  //maybe Inconsolata
+          });
+        layer.add(text);
+      }
+
+      stage.add(layer);
+
+var cur = 0;
+      var clear = false;
+
+      var correct = new Kinetic.Animation(function(frame) {
+        var word = alltext[cur];  
+        word.setFill('green');
+        cur++;
+      }, layer );
+
+     // function wave(n) {
+          var wave = new Kinetic.Animation(function(frame) {
+          var time = frame.time;
+          var n = cur;
+          var word = alltext[0];
+          word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+        }, layer);
+      //}  //end of wave function
+      
+
+
+      var alltext = stage.get('.text');
+
+//look for keypress and check if key press is equal to current character
+             $(document).keypress(function(evt){
+              evt.preventDefault()
+               var keynum = evt.keyCode;
+               var typed = String.fromCharCode(keynum);
+               
+               if(typed == generatedString.charAt(0)) {
+                //change the color of the current character to green if correct 
+                   correct.start();
+                   correct.stop();
+                  generatedString = generatedString.substring(1);
+                  console.log(generatedString); 
+               }
+               else
+                //wave.start();
+                console.log('not correct!')
+            }); 
+
+
+  </script>
+
+
+
+
       <script>
          $("#test").click(function(evt){
             $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
