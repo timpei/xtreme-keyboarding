@@ -4,38 +4,70 @@
       <link href='http://fonts.googleapis.com/css?family=Inconsolata:700' rel='stylesheet' type='text/css'>
       <style>
          body{
-            background-image:url('assets/background1.jpg');
+            background-color:lightGrey;
          }
 
          img{
             position:relative;
-            top:200px;
             width:400px;
             height:auto;
          }
 
-         button{
-            height:60px;
-            width:300px;
-            border-radius:5px;
-            border-color:white;
+         h1{
             font-family: 'Inconsolata', sans-serif;
-            font-size:35px;
-            display:block;
-            margin:25px 0px 25px 0px;
-            background-color:gray;
-            color:white;
-            position:relative;
-            top:200px;
-            
+            color: white;
          }
-      </style>
+
+         #element24{
+            font-size:150px;
+            padding:0px;
+            margin:0px;
+         }
+
+         #imageContainer{
+            position:relative;
+            left:100px;
+            height:500px;
+            width:500px;
+            display:inline;
+         }
+
+         #rightContainer{
+            position:relative;
+            left:50px;
+            bottom:100px;
+            height:500px;
+         width:450px;
+         display:inline-block;
+         
+      }
+
+      button{
+         height:60px;
+         width:300px;
+         border-radius:5px;
+         border-color:#00CC99;
+         font-family: 'Inconsolata', sans-serif;
+         font-size:35px;
+         margin:25px 0px 25px 0px;
+         background-color:gray;
+         color:#00CC99;
+         position:relative;
+         
+      }
+   </style>
    </head>
    <body>
       <center>
-         <img src="assets/typer.gif"/>
-         <button id="playButton">Play</button>
-         <button id="rulesButton">Rules</button>
+         <h1 id="element24">&lt;24/&gt;</h1>
+         <div id="imageContainer">
+            <img src="assets/typerSuccess.png"/>
+         </div>
+         <div id="rightContainer">
+            <h1 id="title">XTreme Typing</h1>
+            <button id="playButton">Play</button>
+            <button id="rulesButton">Rules</button>
+         </div>
       </center>
 
       <script>
