@@ -30,13 +30,14 @@
         }
 
          #container{
-            border:thin solid white;
-            height:500px;
-            width:1000px;
+            height:480px;
+            width:1050px;
             position:relative;
             top:30px;
             background-color:gray;
+            padding:10px 0px 0px 0px;
             margin:0px 0px 100px 0px;
+            border-radius:5px;
          }
 
          #header{
@@ -58,7 +59,7 @@
          }
 
          .healthBar{
-            height:30px;
+            height:15px;
             width:350px;
             background-color:white;
             margin:50px 50px 0px 50px;
@@ -70,6 +71,7 @@
             width:350px;
             background-color:white;
             margin:20px 50px 0px 50px;
+            border:3px solid black;
             border-radius:5px;
          }
 
@@ -82,12 +84,11 @@
          }
          
          .healthInner{
-            height:28px;
+            height:15px;
             border-radius:10px;
             background-color:#00CC99;
             float:left;
             position:relative;
-            top:1px;
          }
 
          #other-player{
@@ -130,6 +131,57 @@
             height:300px;
             width:auto;
          }
+
+         .progressBox{
+            background-color:black;
+            height:80px;
+            width:70px;
+            border-radius:5px;
+            position:relative;
+            bottom:300px;
+            right:440px;
+            font-family: 'Inconsolata',sans-serif;
+         }
+
+         .progress{
+            position:relative;
+            top:15px;
+         }
+
+         #progressBox2{
+            position:relative;
+            left:440px;
+            bottom:402px;
+         }
+
+         .complete{
+            position:relative;
+            color:white;
+         }
+
+         #playerOneText{
+            font-family: 'Inconsolata',sans-serif;
+            text-shadow:0 0 10px #00CC99;
+            color:white;
+            -webkit-transform:rotate(-90deg);
+            font-size:80px;
+            position:relative;
+            right:438px;
+            bottom:370px;
+         }
+
+         #playerTwoText{
+            font-family: 'Inconsolata',sans-serif;
+            text-shadow:0 0 10px #00CC99;
+            color:white;
+            -webkit-transform:rotate(90deg);
+            font-size:50px;
+            position:relative;
+            left:427px;
+            bottom:520px;
+         }
+
+
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
@@ -161,6 +213,18 @@
          </div>
          <div class="textbox first" id="firstBox"></div>
          <div class="textbox second" id="secondBox"></div>
+         <div class="progressBox" id="progressBox1">
+            <h1 class="progress" id="progress1">0%</h1> 
+            <h5 class="complete">complete</h5>
+         </div>
+         <div class="progressBox" id="progressBox2">
+            <h1 class="progress" id="progress2">0%</h1> 
+            <h5 class="complete">complete</h5>
+         </div>
+
+         <h1 id="playerOneText">YOU</h1>
+         <h1 id="playerTwoText">NOT YOU</h1>
+             
          </div>
       </center>
       <script>
@@ -168,10 +232,37 @@
          function decreaseHealth(player){ //player is an integer; either 1 or 2
             if(player == 1){
                $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
+               if(parseFloat($("#firstInnerBar")[0].style.width) > 75){
+                  $("#firstInnerBar")[0].style.backgroundColor = "#00CC99";
+               } else if(parseFloat($("#firstInnerBar")[0].style.width) > 30){
+                  $("#firstInnerBar")[0].style.backgroundColor = "orange";
+               } else {
+                  $("#firstInnerBar")[0].style.backgroundColor = "red";
+               }
+
+                   
             } else {
                $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
+               if(parseFloat($("#secondInnerBar")[0].style.width) > 75){
+                  $("#secondInnerBar")[0].style.backgroundColor = "#00CC99";
+               } else if(parseFloat($("#secondInnerBar")[0].style.width) > 30){
+                  $("#secondInnerBar")[0].style.backgroundColor = "orange";
+               } else {
+                  $("#secondInnerBar")[0].style.backgroundColor = "red";
+               }
             }
          }
+
+         function updateProgress(player){
+            if(player == 1){
+               if(parseFloat($("#progress1")[0].innerText) < 100)
+                  $("#progress1")[0].innerText = parseFloat($("#progress1")[0].innerText) + 10 + "%";
+            } else {
+               if(parseFloat($("#progress2")[0].innerText) < 100)
+                  $("#progress2")[0].innerText = parseFloat($("#progress2")[0].innerText) + 10 + "%";
+            }
+         }
+        
 
       </script>
       <script type='text/javascript'>
