@@ -13,6 +13,12 @@ class Game(db.Model):
   """All the data we store for a game"""
   userA = db.UserProperty()
   userB = db.UserProperty()
+  userABlock = db.StringProperty()
+  userBBlock = db.StringProperty()
+  userAPointerIndex = db.IntegerProperty()
+  userBPointerIndex = db.IntegerProperty()
+  userAPowerup = db.BooleanProperty()
+  userBPowerup = db.BooleanProperty()
   winner = db.StringProperty()
 
 class GameUpdater():
@@ -25,6 +31,12 @@ class GameUpdater():
     gameUpdate = {
       'userA': self.game.userA.user_id(),
       'userB': '' if not self.game.userB else self.game.userB.user_id(),
+      'userABlock': self.game.userABlock,
+      'userBBlock': self.game.userBBlock,
+      'userAPointerIndex': self.game.userAPointerIndex,
+      'userBPointerIndex': self.game.userBPointerIndex,
+      'userAPowerup': self.game.userAPowerup,
+      'userBPowerup': self.game.userBPowerup, 
       'winner': self.game.winner,
     }
 
