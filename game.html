@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+   <head>
+      <style>
+         body{
+            background-image:url('assets/background1.jpg');
+         }
+
+         #container{
+            border:thin solid white;
+            height:1000px;
+            width:1200px;
+         }
+
+         .healthBar{
+            height:100px;
+            width:400px;
+            background-color:white;
+            margin:100px 50px 0px 50px;
+         }
+
+         .textbox{
+            height:600px;
+            width:400px;
+            background-color:white;
+            margin:100px 50px 0px 50px;
+         }
+
+         .first{
+            display:inline-block;
+         }
+
+         .second{
+            display:inline-block;
+         }
+
+      </style>
+
+      <script src='/_ah/channel/jsapi'></script>
+   </head>
+   <body>
+      <center>
+
+      <div id='other-player' style='display:none'>
+        Waiting for another player to join.<br>
+        Send them this link to play:<br>
+        <div id='game-link'><a href='{{ game_link }}'>{{ game_link }}</a></div>
+      </div>
+
+      <div id="container" style="display:none">
+         <div class="healthBar first" id="firstBar"></div>
+         <div class="healthBar second" id="secondBar"></div>
+         <div class="textbox first" id="firstBox"></div>
+         <div class="textbox second" id="secondBox"></div>
+         </div>
+      </center>
+
+
+      <script type='text/javascript'>
+        var state = {
+          game_key: '{{ game_key }}',
+          me: '{{ me }}'
+        };
+
+        updateGame = function() {
+          
+          var display = {
+            'other-player': 'none',
+            'container': 'none'
+          }; 
+
+          if (!state.userB || state.userB == '') {
+           display['other-player'] = 'block';
+          }
+          else {
+              display['container'] = 'block';
+          }
+          
+          for (var label in display) {
+            document.getElementById(label).style.display = display[label];
+          }
+        };
+        
+        sendMessage = function(path, opt_param) {
+          path += '?g=' + state.game_key;
+          if (opt_param) {
+            path += '&' + opt_param;
+          }
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', path, true);
+          xhr.send();
+        };
+        
+        onOpened = function() {
+          sendMessage('/opened');
+        };
+        
+        onMessage = function(m) {
+          newState = JSON.parse(m.data.replace(/&quot;/g,'"'));
+          state.userA = newState.userA || state.userA;
+          state.userB = newState.userB || state.userB;
+          state.winner = newState.winner || "";
+          updateGame();
+        }
+        
+        openChannel = function() {
+          var token = '{{ token }}';
+          var channel = new goog.appengine.Channel(token);
+          var handler = {
+            'onopen': onOpened,
+            'onmessage': onMessage,
+            'onerror': function() {},
+            'onclose': function() {}
+          };
+          var socket = channel.open(handler);
+          socket.onopen = onOpened;
+        }
+        
+        initialize = function() {
+          openChannel();
+          // initialize game information
+          onMessage({data: '{{ initial_message }}'});
+        }      
+
+        setTimeout(initialize, 100);
+
+      </script>
+   </body>
+</html>
