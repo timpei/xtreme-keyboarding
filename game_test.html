@@ -144,9 +144,6 @@
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
-    
-≈
-
    </head>
    <body> 
       <center>
@@ -183,6 +180,12 @@
       <script defer="defer">
 
   var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+
+      
+
+
+
+
 
       var stage = new Kinetic.Stage({
         container: 'firstBox',
@@ -301,9 +304,11 @@ var cur = 0;
           setInterval(function(){
             if (i == 0) {
               printBoard('GO!');
+              //console.log(i);
             }
             else if (i == -1) {
               printBoard('');
+
               return;
             }
             else {
@@ -311,8 +316,8 @@ var cur = 0;
             }
             i--;
           }, 1000);
-        }
 
+      }
 
         updateGame = function() {
           
@@ -327,13 +332,34 @@ var cur = 0;
           else {
               display['container'] = 'block';
               countDown();
+              renderText();
+              
           }
-
           
           for (var label in display) {
             document.getElementById(label).style.display = display[label];
           }
+
+          
         };
+
+        renderText = function() {
+          /*var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+
+          console.log(generatedString);
+
+              for (var i = 0; i < generatedString.length; i++) {
+                var charStatus = 'inactive';
+                if (i == 0) charStatus = 'active';
+                console.log('What happened?');
+                document.getElementById("firstBox").appendChild('<div class="' + charStatus + '">' + generatedString.charAt(i) + '</div>');
+              }
+          }*/
+        }
+
+        playGame = function() {
+          // Power ups
+        }
         
         sendMessage = function(path, opt_param) {
           path += '?g=' + state.game_key;
