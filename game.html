@@ -130,6 +130,14 @@
             height:300px;
             width:auto;
          }
+
+
+         .countdownText{
+            font-family: Inconsolata;
+            font-size: 5em;
+            margin-top: 10px;
+            color: #0c9;
+         }
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
@@ -179,6 +187,34 @@
           game_key: '{{ game_key }}',
           me: '{{ me }}'
         };
+
+        countDown = function() {
+
+
+          function printBoard(str){
+              document.getElementById("firstBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+              document.getElementById("secondBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+          }
+
+          printBoard('READY!');
+          
+          var i = 5;
+
+          setInterval(function(){
+            if (i == 0) {
+              printBoard('GO!');
+            }
+            else if (i == -1) {
+              printBoard('');
+              return;
+            }
+            else {
+              printBoard(i);
+            }
+            i--;
+          }, 1000);
+        }
+        countDown();
 
         updateGame = function() {
           
