@@ -1,0 +1,11 @@
+{
+  "name": "xtreme-typing",
+  "description": "A web-based typing game.",
+  "version": "0.1",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "icons": { "16": "assets/typing-16.png", "128": "assets/typing-128.png" }
+}

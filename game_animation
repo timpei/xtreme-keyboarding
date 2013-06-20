@@ -33,10 +33,6 @@
  var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
       //var words = generatedString.split(" ");
 
-
-
-
-
       var stage = new Kinetic.Stage({
         container: 'container',
         width: 578,
@@ -48,7 +44,7 @@
           var xmult = 0;
           var ymult = 0;
 
-
+//for each character in the string/block of test, create a canvas element thing
       for(var n = 0; n < generatedString.length; n++) {        
   
           //every time maxchar is reached, make a new line
@@ -77,30 +73,43 @@
       var cur = 0;
       var clear = false;
 
-      var red = new Kinetic.Animation(function(frame) {
+      var correct = new Kinetic.Animation(function(frame) {
         var word = alltext[cur];  
         word.setFill('green');
-        red.stop();
         cur++;
       }, layer );
+
+     // function wave(n) {
+          var wave = new Kinetic.Animation(function(frame) {
+          var time = frame.time;
+          var n = cur;
+          var word = alltext[0];
+          word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+        }, layer);
+      //}  //end of wave function
+      
 
 
       var alltext = stage.get('.text');
 
+//look for keypress and check if key press is equal to current character
              $(document).keypress(function(evt){
                var keynum = evt.keyCode;
                var typed = String.fromCharCode(keynum);
                
                if(typed == generatedString.charAt(0)) {
-                     
-                   red.start();
+                //change the color of the current character to green if correct 
+                   correct.start();
+                   correct.stop();
                   generatedString = generatedString.substring(1);
-                  console.log(generatedString);
-                  //alert(frontString.fontcolor("blue"));
+                  console.log(generatedString); 
                }
                else
+                //wave.start();
                 console.log('not correct!')
             }); 
+
+
 
       function myFunc(i) {
         var anim = new Kinetic.Animation(function(frame) {

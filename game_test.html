@@ -32,14 +32,13 @@
         }
 
          #container{
-            height:480px;
-            width:1050px;
+            border:thin solid white;
+            height:500px;
+            width:1000px;
             position:relative;
             top:30px;
             background-color:gray;
-            padding:10px 0px 0px 0px;
             margin:0px 0px 100px 0px;
-            border-radius:5px;
          }
 
          #header{
@@ -61,7 +60,7 @@
          }
 
          .healthBar{
-            height:15px;
+            height:30px;
             width:350px;
             background-color:white;
             margin:50px 50px 0px 50px;
@@ -73,7 +72,6 @@
             width:350px;
             background-color:white;
             margin:20px 50px 0px 50px;
-            border:3px solid black;
             border-radius:5px;
          }
 
@@ -87,11 +85,12 @@
          }
          
          .healthInner{
-            height:15px;
+            height:28px;
             border-radius:10px;
             background-color:#00CC99;
             float:left;
             position:relative;
+            top:1px;
          }
 
          #other-player{
@@ -135,54 +134,6 @@
             width:auto;
          }
 
-         .progressBox{
-            background-color:black;
-            height:80px;
-            width:70px;
-            border-radius:5px;
-            position:relative;
-            bottom:300px;
-            right:440px;
-            font-family: 'Inconsolata',sans-serif;
-         }
-
-         .progress{
-            position:relative;
-            top:15px;
-         }
-
-         #progressBox2{
-            position:relative;
-            left:440px;
-            bottom:402px;
-         }
-
-         .complete{
-            position:relative;
-            color:white;
-         }
-
-         #playerOneText{
-            font-family: 'Inconsolata',sans-serif;
-            text-shadow:0 0 10px #00CC99;
-            color:white;
-            -webkit-transform:rotate(-90deg);
-            font-size:80px;
-            position:relative;
-            right:438px;
-            bottom:370px;
-         }
-
-         #playerTwoText{
-            font-family: 'Inconsolata',sans-serif;
-            text-shadow:0 0 10px #00CC99;
-            color:white;
-            -webkit-transform:rotate(90deg);
-            font-size:50px;
-            position:relative;
-            left:427px;
-            bottom:520px;
-         }
 
          .countdownText{
             font-family: Inconsolata;
@@ -193,6 +144,9 @@
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
+    
+≈
+
    </head>
    <body> 
       <center>
@@ -212,6 +166,16 @@
         <div id="sentence4">We'll load the game automatically once your opponent joins.</div>
       </div>
 
+<<<<<<< HEAD
+      <div id="container">
+         <button id="test">click</button>
+         <div class="healthBar first" id="firstBar"><div class="healthInner first" id="firstInnerBar" style="width:100%"></div></div>
+         <div class="healthBar second" id="secondBar"><div class="healthInner second" id="secondInnerBar" style="width:100%"></div></div>
+         <div class="textbox first" id="firstBox"> 
+
+
+         </div>
+=======
       <div id="container" style="display:none">
          <div class="healthBar first" id="firstBar">
             <div class="healthInner first" id="firstInnerBar" style="width:100%"></div>
@@ -220,19 +184,8 @@
             <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
          </div>
          <div class="textbox first" id="firstBox"></div>
+>>>>>>> fc96e3894860f6c2005e31dd7d0050259c2dc361
          <div class="textbox second" id="secondBox"></div>
-         <div class="progressBox" id="progressBox1">
-            <h1 class="progress" id="progress1">0%</h1> 
-            <h5 class="complete">complete</h5>
-         </div>
-         <div class="progressBox" id="progressBox2">
-            <h1 class="progress" id="progress2">0%</h1> 
-            <h5 class="complete">complete</h5>
-         </div>
-
-         <h1 id="playerOneText">YOU</h1>
-         <h1 id="playerTwoText">NOT YOU</h1>
-             
          </div>
       </center>
 
@@ -332,37 +285,10 @@ var cur = 0;
          function decreaseHealth(player){ //player is an integer; either 1 or 2
             if(player == 1){
                $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
-               if(parseFloat($("#firstInnerBar")[0].style.width) > 75){
-                  $("#firstInnerBar")[0].style.backgroundColor = "#00CC99";
-               } else if(parseFloat($("#firstInnerBar")[0].style.width) > 30){
-                  $("#firstInnerBar")[0].style.backgroundColor = "orange";
-               } else {
-                  $("#firstInnerBar")[0].style.backgroundColor = "red";
-               }
-
-                   
             } else {
                $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
-               if(parseFloat($("#secondInnerBar")[0].style.width) > 75){
-                  $("#secondInnerBar")[0].style.backgroundColor = "#00CC99";
-               } else if(parseFloat($("#secondInnerBar")[0].style.width) > 30){
-                  $("#secondInnerBar")[0].style.backgroundColor = "orange";
-               } else {
-                  $("#secondInnerBar")[0].style.backgroundColor = "red";
-               }
             }
          }
-
-         function updateProgress(player){
-            if(player == 1){
-               if(parseFloat($("#progress1")[0].innerText) < 100)
-                  $("#progress1")[0].innerText = parseFloat($("#progress1")[0].innerText) + 10 + "%";
-            } else {
-               if(parseFloat($("#progress2")[0].innerText) < 100)
-                  $("#progress2")[0].innerText = parseFloat($("#progress2")[0].innerText) + 10 + "%";
-            }
-         }
-        
 
       </script>
       <script type='text/javascript'>
