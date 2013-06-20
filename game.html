@@ -214,7 +214,7 @@
             i--;
           }, 1000);
         }
-        countDown();
+
 
         updateGame = function() {
           
@@ -228,7 +228,9 @@
           }
           else {
               display['container'] = 'block';
+              countDown();
           }
+
           
           for (var label in display) {
             document.getElementById(label).style.display = display[label];
