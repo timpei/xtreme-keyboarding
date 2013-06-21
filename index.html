@@ -5,11 +5,15 @@
       <style>
          body{
             background-color:lightGrey; 
+            min-width:1000px;
          }
 
          img{
             position:relative;
-            width:400px;
+            width:350px;
+            left:200px;
+            bottom:200px;
+            width:700px;
             height:auto;
          }
 
@@ -20,19 +24,17 @@
          }
 
          #element24{
-            font-size:80px;
-            padding:0px;
-            margin:0px;
             position:relative;
-            bottom:90px;
-            right:21px;
+            left:650px;
+            bottom:113px;
          }
 
          #title{
              position:relative;
-             left:760px;
+             font-size:60px;
              width:500px;
-             bottom:195px;
+             right:30px;
+             bottom:175px;
          }
 
          #imageContainer{
@@ -46,90 +48,120 @@
 
          #rightContainer{
             position:relative;
-            left:200px;
             bottom:280px;
-            height:100px;
-            width:450px;
+            height:500px;
+            width:800px;
             display:inline-block;
          
-      }
+         }
 
-      button{
-         height:50px;
-         width:250px;
-         border-radius:5px;
-         border-color:#00CC99;
-         font-family: 'Inconsolata', sans-serif;
-         font-size:35px;
-         margin:10px 0px 10px 0px;
-         background-color:gray;
-         color:white;
-         position:relative;
-         
-      }
+         button{
+            height:50px;
+            width:220px;
+            border-radius:5px;
+            border-color:#00CC99;
+            font-family: 'Inconsolata', sans-serif;
+            font-size:35px;
+            background-color:gray;
+            color:white;
+            position:absolute;
+            display:block;
+            bottom:850px;
+            margin-bottom:10px;
+            top:30px; 
+            left:685px;
+         }
 
-      #header{
-          width:auto;
-          height:50px;
-          background-color:gray;
-          margin:0px;
-          padding:0px;
-      }
+         #header{
+             width:auto;
+             height:50px;
+             background-color:gray;
+             margin:0px;
+             padding:0px;
+             border-radius:5px;
+         }
 
-      #trapezoid{
-          border-top:50px solid gray;
-          border-left:50px solid transparent;
-          border-right:50px solid transparent;
-          height:0;
-          width:150px;
-          position:relative;
-          left:100px;
-      }
+         #trapezoid{
+             border-top:50px solid gray;
+             border-left:50px solid transparent;
+             border-right:50px solid transparent;
+             height:0;
+             width:450px;
+             position:relative;
+             right:300px;
+         }
 
-      .quote{
-          font-family: 'Inconsolata',sans-serif;
-          font-size:70px;
-          position:relative;
-          color:white;
-          text-shadow: 0 0 20px #00CC99;
-          top:100px;
-      }
+         .quote{
+             font-family: 'Inconsolata',sans-serif;
+             font-size:70px;
+             position:relative;
+             color:white;
+             text-shadow: 0 0 20px #00CC99;
+             top:70px;
+         }
 
-      #quote1{
-          right:370px;
-      }
+         #quote1{
+             right:300px;
+             font-size:80px;
+         }
 
-      #quote2{
-          right:430px;
-          font-size:100px;
-      }
+         #quote2{
+             right:310px;
+             font-size:150px;
+             text-shadow: 0 0 50px red;
+         }
 
-      #quote3{
-          right:370px;
-      }
+         #quote3{
+             right:300px;
+             font-size:80px;
+         }
 
-      #outerwrapper{
-          width:auto;
-          height:200px;
-      }
+         #outerwrapper{
+             width:auto;
+             height:200px;
+         }
+
+         #success{
+             width:600px;
+             position:relative;
+             bottom:50px; 
+         }
+      
+         #bubble{
+            width:300px;
+            position:relative;
+            bottom:570px;
+            left:400px;
+         }
+
+         #playButton{
+            position:absolute;
+            top:0px;
+         }
+
+         #rulesButton{
+            position:absolute;
+            top:60px;
+         }
+
 
    </style>
    </head>
    <body>
+   <center>
        <div id="outerwrapper">
       <div id="header"></div>
       <div id="trapezoid">
         <h1 id="element24">&lt;24/&gt;</h1>
         <h1 id="title">XTreme Typing</h1>
       </div>
-      <center>
           <div class="quote" id="quote1">YOUR FINGERS</div>
           <div class="quote" id="quote2">AREN'T</div>
           <div class="quote" id="quote3">FAST ENOUGH.</div>
-         <div id="imageContainer">
-            <img src="assets/typerSuccess.png"/>
-         </div>
+         
          <div id="rightContainer">
+            <img id="success" src="assets/typerSuccess.png"/>
+            <img id="bubble" src="assets/bubble.png"/>
             <button id="playButton">Play</button>
             <button id="rulesButton">Rules</button>
         </div>

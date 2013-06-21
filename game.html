@@ -2,18 +2,20 @@
 <html>
    <head>
       <link href='http://fonts.googleapis.com/css?family=Inconsolata:700' rel='stylesheet' type='text/css'>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+      
+
       <style>
          body{
              background-color:lightGrey;
+             min-width:1000px;
+             text-align: center;
          }
 
          #element24{
-             font-size:80px;
-             padding:0px;
-             margin:0px;
              position:relative;
-             bottom:90px;
-             right:21px;
+             left:650px;
+             bottom:235px;
          }
 
          h1{
@@ -24,27 +26,30 @@
 
         #title{
             position:relative;
-            left:760px;
+            font-size:60px;
             width:500px;
-            bottom:195px;
+            right:30px;
+            bottom:120px;
         }
 
          #container{
-            border:thin solid white;
-            height:500px;
-            width:1000px;
+            height:480px;
+            width:1050px;
             position:relative;
             top:30px;
             background-color:gray;
+            padding:10px 0px 0px 0px;
             margin:0px 0px 100px 0px;
+            border-radius:5px;
          }
-
+  
          #header{
              width:auto;
              height:50px;
              background-color:gray;
              margin:0px;
              padding:0px;
+             border-radius:5px;
          }
          
          #trapezoid{
@@ -52,13 +57,13 @@
              border-left:50px solid transparent;
              border-right:50px solid transparent;
              height:0;
-             width:150px;
+             width:450px;
              position:relative;
-             left:100px;
+             right:300px;
          }
 
          .healthBar{
-            height:30px;
+            height:15px;
             width:350px;
             background-color:white;
             margin:50px 50px 0px 50px;
@@ -70,49 +75,397 @@
             width:350px;
             background-color:white;
             margin:20px 50px 0px 50px;
+            border:3px solid black;
             border-radius:5px;
          }
 
          .first{
-            display:inline-block;
+           display:inline-block;
+           position:relative;
          }
 
          .second{
             display:inline-block;
          }
+         
+         .healthInner{
+            height:15px;
+            border-radius:10px;
+            background-color:#00CC99;
+            float:left;
+            position:relative;
+         }
 
+         #other-player{
+            font-family: 'Inconsolata',sans-serif;
+            position:relative;
+            top:50px;
+         }
+
+         #sentence1{
+            color:white;
+            font-size:100px;
+            position:relative;
+            text-shadow:0 0 10px #00CC99;
+            right:300px;
+         }
+
+         #anxious{
+            text-shadow:0 0 60px red;
+            font-size:130px;
+         }
+
+         #dw{
+            font-size:60px;
+         }
+            
+
+         #sentence2{
+            font-size:25px;
+            position:relative;
+            top:20px;
+         }
+
+         #sentence3{
+            font-size:25px;
+            color:white;
+            position:relative;
+            top:20px;
+         }
+
+         #sentence4{
+            position:relative;
+            font-size:25px;
+            top:20px;
+         }
+
+         img{
+            position:relative;
+            bottom:350px;
+            left:200px;
+            height:400px;
+            width:auto;
+         }
+
+         .progressBox{
+            background-color:black;
+            height:80px;
+            width:70px;
+            border-radius:5px;
+            position:relative;
+            bottom:300px;
+            right:440px;
+            font-family: 'Inconsolata',sans-serif;
+         }
+
+         .progress{
+            position:relative;
+            top:15px;
+         }
+
+         #progressBox2{
+            position:relative;
+            left:440px;
+            bottom:402px;
+         }
+
+         .complete{
+            position:relative;
+            color:white;
+         }
+
+         #playerOneText{
+            font-family: 'Inconsolata',sans-serif;
+            text-shadow:0 0 10px #00CC99;
+            color:white;
+            -webkit-transform:rotate(-90deg);
+            font-size:80px;
+            position:relative;
+            right:438px;
+            bottom:370px;
+         }
+
+         #playerTwoText{
+            font-family: 'Inconsolata',sans-serif;
+            text-shadow:0 0 10px #00CC99;
+            color:white;
+            -webkit-transform:rotate(90deg);
+            font-size:50px;
+            position:relative;
+            left:427px;
+            bottom:520px;
+         }
+
+         .countdownText{
+            font-family: Inconsolata;
+            font-size: 5em;
+            margin-top: 10px;
+            color: #0c9;
+         }
+
+         canvas{
+            position:relative;
+            right: 0px;
+         }
+
+         #bottomBar{
+            background-color:gray;
+            height:130px;
+            width:1000px;
+            border-radius:5px;
+            position:relative;
+            bottom:350px;
+         }
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
    </head>
-   <body>
+   <body> 
+      <center>
+      <div id="outerwrapper">
       <div id="header"></div>
       <div id="trapezoid">
-          <h1 id="element24">&lt;24/&gt;</h1>
           <h1 id="title">XTreme Typing</h1>
+          <h1 id="element24">&lt;24/&gt;</h1>
       </div>
-      <center>
+      </div>
 
       <div id='other-player' style='display:none'>
-        Waiting for another player to join.<br>
-        Send them this link to play:<br>
-        <div id='game-link'><a href='{{ game_link }}'>{{ game_link }}</a></div>
+        <div id="sentence1"><div id="anxious">ANXIOUS</div> FINGERS?</div><br>
+        <img src="assets/blueTyper.png"/>
+        <div id="bottomBar">
+        <div id="sentence2">Copy and paste this link to a friend:</div>
+        <div id='sentence3'>{{ game_link }}</div><br>
+        <div id="sentence4">We'll load the game automatically once your opponent joins.</div>
+        </div>
       </div>
 
-      <div id="container" style='display:none'>
-         <div class="healthBar first" id="firstBar"></div>
-         <div class="healthBar second" id="secondBar"></div>
-         <div class="textbox first" id="firstBox"></div>
+      <div id="container" style="display:none">
+         <div class="healthBar first" id="firstBar">
+            <div class="healthInner first" id="firstInnerBar" style="width:100%"></div>
+         </div>
+         <div class="healthBar second" id="secondBar">
+            <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
+         </div>
+
+          <div class="textbox first" id="firstBox"> </div>
          <div class="textbox second" id="secondBox"></div>
+         <div class="progressBox" id="progressBox1">
+            <h1 class="progress" id="progress1">0%</h1> 
+            <h5 class="complete">complete</h5>
+         </div>
+         <div class="progressBox" id="progressBox2">
+            <h1 class="progress" id="progress2">0%</h1> 
+            <h5 class="complete">complete</h5>
+
+         </div>
+
+         <h1 id="playerOneText">YOU</h1>
+         <h1 id="playerTwoText">NOT YOU</h1>
+             
+             
          </div>
       </center>
 
+  <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
+      <script defer="defer">
 
+  var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+
+      var stage = new Kinetic.Stage({
+        container: 'firstBox',
+        width: 900,
+        height: 300,
+      });
+      
+      var layer = new Kinetic.Layer();
+      var canvases = document.getElementsByTagName("canvas");
+
+
+          var xmult = 0;
+          var ymult = 0;
+
+//your text
+//for each character in the string/block of test, create a canvas element thing
+      for(var n = 0; n < generatedString.length; n++) {        
+  
+          //every time maxchar is reached, make a new line
+          if( (n+1)%25 == 0 ) {
+              xmult = 1;
+              ymult++;
+          }
+          else {
+              xmult++;
+          }
+          var i = n;
+          var text = new Kinetic.Text({
+             x: xmult * 13,
+             y: ymult * 20,
+            fill: 'black',
+            text: generatedString[i],
+            name: 'text',
+            fontSize: 20,
+            fontFamily: 'Courier',  //maybe Inconsolata
+          });
+        layer.add(text);
+      }
+
+      stage.add(layer);
+
+ var xmult2 = 0;
+var ymult2 = 0;
+
+
+//opponent's text
+var layer2 = new Kinetic.Layer();
+
+for(var n = 0; n < generatedString.length; n++) {        
+  
+          //every time maxchar is reached, make a new line
+          if( (n+1)%25 == 0 ) {
+              xmult2 = 1;
+              ymult2++;
+          }
+          else {
+              xmult2++;
+          }
+          var i = n;
+          var text = new Kinetic.Text({
+             x: xmult2 * 13 + 460,
+             y: ymult2 * 20,
+            fill: 'black',
+            text: generatedString[i],
+            name: 'text',
+            fontSize: 20,
+            fontFamily: 'Courier',  //maybe Inconsolata
+          });
+        layer2.add(text);
+      }
+
+      stage.add(layer2);
+
+var cur = 0;
+      var clear = false;
+
+      var correct = new Kinetic.Animation(function(frame) {
+        var word = alltext[cur];  
+        word.setFill('green');
+        
+        if(cur<alltext.length) {
+          var word2 = alltext[cur+1];
+          word2.setFill('red');
+        }
+        cur++;
+      }, layer );
+
+     // function wave(n) {
+          var wave = new Kinetic.Animation(function(frame) {
+          var time = frame.time;
+          var n = cur;
+          var word = alltext[0];
+          word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+        }, layer);
+      //}  //end of wave function
+      
+
+
+      var alltext = stage.get('.text');
+
+//look for keypress and check if key press is equal to current character
+             $(document).keypress(function(evt){
+              evt.preventDefault()
+               var keynum = evt.keyCode;
+               var typed = String.fromCharCode(keynum);
+               
+               if(typed == generatedString.charAt(0)) {
+                //change the color of the current character to green if correct 
+                   correct.start();
+                   correct.stop();
+                  generatedString = generatedString.substring(1);
+                  console.log(generatedString); 
+               }
+               else
+                //wave.start();
+                console.log('not correct!')
+            }); 
+
+  </script>
+
+
+
+
+      <script>
+
+         function decreaseHealth(player){ //player is an integer; either 1 or 2
+            if(player == 1){
+               $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
+               if(parseFloat($("#firstInnerBar")[0].style.width) > 75){
+                  $("#firstInnerBar")[0].style.backgroundColor = "#00CC99";
+               } else if(parseFloat($("#firstInnerBar")[0].style.width) > 30){
+                  $("#firstInnerBar")[0].style.backgroundColor = "orange";
+               } else {
+                  $("#firstInnerBar")[0].style.backgroundColor = "red";
+               }
+
+                   
+            } else {
+               $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
+               if(parseFloat($("#secondInnerBar")[0].style.width) > 75){
+                  $("#secondInnerBar")[0].style.backgroundColor = "#00CC99";
+               } else if(parseFloat($("#secondInnerBar")[0].style.width) > 30){
+                  $("#secondInnerBar")[0].style.backgroundColor = "orange";
+               } else {
+                  $("#secondInnerBar")[0].style.backgroundColor = "red";
+               }
+            }
+         }
+
+         function updateProgress(player){
+            if(player == 1){
+               if(parseFloat($("#progress1")[0].innerText) < 100)
+                  $("#progress1")[0].innerText = parseFloat($("#progress1")[0].innerText) + 10 + "%";
+            } else {
+               if(parseFloat($("#progress2")[0].innerText) < 100)
+                  $("#progress2")[0].innerText = parseFloat($("#progress2")[0].innerText) + 10 + "%";
+            }
+         }
+        
+
+      </script>
       <script type='text/javascript'>
 var state = {
    game_key: '{{ game_key }}',
    me: '{{ me }}',
 };
+
+
+countDown = function() {
+
+   function printBoard(str){
+       document.getElementById("firstBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+       document.getElementById("secondBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+   }
+
+   printBoard('READY!');
+   
+   var i = 5;
+
+   setInterval(function(){
+     if (i == 0) {
+       printBoard('GO!');
+     }
+     else if (i == -1) {
+       printBoard('');
+       return;
+     }
+     else {
+       printBoard(i);
+     }
+     i--;
+   }, 1000);
+}
+countDown();
+
 
 updateGame = function() {
    
@@ -211,7 +564,6 @@ initialize = function() {
 }      
 
 setTimeout(initialize, 100);
-
       </script>
    </body>
 </html>

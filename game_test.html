@@ -1,0 +1,392 @@
+<!doctype html>
+<html>
+   <head>
+      <link href='http://fonts.googleapis.com/css?family=Inconsolata:700' rel='stylesheet' type='text/css'>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+      
+
+      <style>
+         body{
+             background-color:lightGrey;
+             min-width:1000px;
+         }
+
+         #element24{
+             position:relative;
+             left:650px;
+             bottom:235px;
+         }
+
+         h1{
+             font-family: 'Inconsolata',sans-serif;
+             color:white;
+             text-shadow:0 0 10px #00CC99;
+         }
+
+        #title{
+            position:relative;
+            font-size:60px;
+            width:500px;
+            right:30px;
+            bottom:120px;
+        }
+
+         #container{
+            border:thin solid white;
+            height:500px;
+            width:1000px;
+            position:relative;
+            top:30px;
+            background-color:gray;
+            margin:0px 0px 100px 0px;
+         }
+
+         #header{
+             width:auto;
+             height:50px;
+             background-color:gray;
+             margin:0px;
+             padding:0px;
+         }
+         
+         #trapezoid{
+             border-top:50px solid gray;
+             border-left:50px solid transparent;
+             border-right:50px solid transparent;
+             height:0;
+             width:450px;
+             position:relative;
+             right:300px;
+         }
+
+         .healthBar{
+            height:30px;
+            width:350px;
+            background-color:white;
+            margin:50px 50px 0px 50px;
+            border-radius:10px;
+         }
+
+         .textbox{
+            height:300px;
+            width:350px;
+            background-color:white;
+            margin:20px 50px 0px 50px;
+            border-radius:5px;
+         }
+
+         .first{
+           display:inline-block;
+           position:relative;
+         }
+
+         .second{
+            display:inline-block;
+         }
+         
+         .healthInner{
+            height:28px;
+            border-radius:10px;
+            background-color:#00CC99;
+            float:left;
+            position:relative;
+            top:1px;
+         }
+
+         #other-player{
+            font-family: 'Inconsolata',sans-serif;
+            position:relative;
+            top:50px;
+         }
+
+         #sentence1{
+            color:white;
+            font-size:100px;
+            position:relative;
+            text-shadow:0 0 10px #00CC99;
+         }
+
+         #anxious{
+            text-shadow:0 0 60px red;
+         }
+
+         #dw{
+            font-size:60px;
+         }
+            
+
+         #sentence2{
+            font-size:30px;
+         }
+
+         #sentence3{
+            font-size:30px;
+            color:white;
+            text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+         }
+
+         #sentence4{
+            font-size:30px;
+         }
+
+         img{
+            height:300px;
+            width:auto;
+         }
+
+
+         .countdownText{
+            font-family: Inconsolata;
+            font-size: 5em;
+            margin-top: 10px;
+            color: #0c9;
+         }
+      </style>
+
+      <script src='/_ah/channel/jsapi'></script>
+    
+≈
+
+   </head>
+   <body> 
+      <center>
+      <div id="outerwrapper">
+      <div id="header"></div>
+      <div id="trapezoid">
+          <h1 id="title">XTreme Typing</h1>
+          <h1 id="element24">&lt;24/&gt;</h1>
+      </div>
+      </div>
+
+      <div id='other-player' style='display:none'>
+        <div id="sentence1"><span id="anxious">ANXIOUS</span> FINGERS?<div id="dw">Don't worry!</div></div><br>
+        <div id="sentence2">Copy and paste this link to a friend:</div>
+        <div id='sentence3'>{{ game_link }}</div><br>
+        <img src="assets/blueTyper.png"/>
+        <div id="sentence4">We'll load the game automatically once your opponent joins.</div>
+      </div>
+
+<<<<<<< HEAD
+      <div id="container">
+         <button id="test">click</button>
+         <div class="healthBar first" id="firstBar"><div class="healthInner first" id="firstInnerBar" style="width:100%"></div></div>
+         <div class="healthBar second" id="secondBar"><div class="healthInner second" id="secondInnerBar" style="width:100%"></div></div>
+         <div class="textbox first" id="firstBox"> 
+
+
+         </div>
+=======
+      <div id="container" style="display:none">
+         <div class="healthBar first" id="firstBar">
+            <div class="healthInner first" id="firstInnerBar" style="width:100%"></div>
+         </div>
+         <div class="healthBar second" id="secondBar">
+            <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
+         </div>
+         <div class="textbox first" id="firstBox"></div>
+>>>>>>> fc96e3894860f6c2005e31dd7d0050259c2dc361
+         <div class="textbox second" id="secondBox"></div>
+         </div>
+      </center>
+
+
+  <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
+      <script defer="defer">
+
+  var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+
+      var stage = new Kinetic.Stage({
+        container: 'firstBox',
+        width: 350,
+        height: 300,
+      });
+      
+      var layer = new Kinetic.Layer();
+      var canvases = document.getElementsByTagName("canvas");
+
+
+          var xmult = 0;
+          var ymult = 0;
+
+//for each character in the string/block of test, create a canvas element thing
+      for(var n = 0; n < generatedString.length; n++) {        
+  
+          //every time maxchar is reached, make a new line
+          if( (n+1)%25 == 0 ) {
+              xmult = 1;
+              ymult++;
+          }
+          else {
+              xmult++;
+          }
+          var i = n;
+          var text = new Kinetic.Text({
+             x: xmult * 13,
+             y: ymult * 20,
+            fill: 'black',
+            text: generatedString[i],
+            name: 'text',
+            fontSize: 20,
+            fontFamily: 'Courier',  //maybe Inconsolata
+          });
+        layer.add(text);
+      }
+
+      stage.add(layer);
+
+var cur = 0;
+      var clear = false;
+
+      var correct = new Kinetic.Animation(function(frame) {
+        var word = alltext[cur];  
+        word.setFill('green');
+        cur++;
+      }, layer );
+
+     // function wave(n) {
+          var wave = new Kinetic.Animation(function(frame) {
+          var time = frame.time;
+          var n = cur;
+          var word = alltext[0];
+          word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+        }, layer);
+      //}  //end of wave function
+      
+
+
+      var alltext = stage.get('.text');
+
+//look for keypress and check if key press is equal to current character
+             $(document).keypress(function(evt){
+              evt.preventDefault()
+               var keynum = evt.keyCode;
+               var typed = String.fromCharCode(keynum);
+               
+               if(typed == generatedString.charAt(0)) {
+                //change the color of the current character to green if correct 
+                   correct.start();
+                   correct.stop();
+                  generatedString = generatedString.substring(1);
+                  console.log(generatedString); 
+               }
+               else
+                //wave.start();
+                console.log('not correct!')
+            }); 
+
+
+  </script>
+
+
+
+
+      <script>
+
+         function decreaseHealth(player){ //player is an integer; either 1 or 2
+            if(player == 1){
+               $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
+            } else {
+               $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
+            }
+         }
+
+      </script>
+      <script type='text/javascript'>
+        var state = {
+          game_key: '{{ game_key }}',
+          me: '{{ me }}'
+        };
+
+        countDown = function() {
+
+
+          function printBoard(str){
+              document.getElementById("firstBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+              document.getElementById("secondBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+          }
+
+          printBoard('READY!');
+          
+          var i = 5;
+
+          setInterval(function(){
+            if (i == 0) {
+              printBoard('GO!');
+            }
+            else if (i == -1) {
+              printBoard('');
+              return;
+            }
+            else {
+              printBoard(i);
+            }
+            i--;
+          }, 1000);
+        }
+        countDown();
+
+        updateGame = function() {
+          
+          var display = {
+            'other-player': 'none',
+            'container': 'none'
+          }; 
+
+          if (!state.userB || state.userB == '') {
+           display['other-player'] = 'block';
+          }
+          else {
+              display['container'] = 'block';
+          }
+          
+          for (var label in display) {
+            document.getElementById(label).style.display = display[label];
+          }
+        };
+        
+        sendMessage = function(path, opt_param) {
+          path += '?g=' + state.game_key;
+          if (opt_param) {
+            path += '&' + opt_param;
+          }
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', path, true);
+          xhr.send();
+        };
+        
+        onOpened = function() {
+          sendMessage('/opened');
+        };
+        
+        onMessage = function(m) {
+          newState = JSON.parse(m.data.replace(/&quot;/g,'"'));
+          state.userA = newState.userA || state.userA;
+          state.userB = newState.userB || state.userB;
+          state.winner = newState.winner || "";
+          updateGame();
+        }
+        
+        openChannel = function() {
+          var token = '{{ token }}';
+          var channel = new goog.appengine.Channel(token);
+          var handler = {
+            'onopen': onOpened,
+            'onmessage': onMessage,
+            'onerror': function() {},
+            'onclose': function() {}
+          };
+          var socket = channel.open(handler);
+          socket.onopen = onOpened;
+        }
+        
+        initialize = function() {
+          openChannel();
+          // initialize game information
+          onMessage({data: '{{ initial_message }}'});
+        }      
+
+        setTimeout(initialize, 100);
+
+      </script>
+   </body>
+</html>
