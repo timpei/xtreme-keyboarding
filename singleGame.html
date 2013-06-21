@@ -68,6 +68,9 @@
             background-color:white;
             margin:50px 50px 0px 50px;
             border-radius:10px;
+            position:relative;
+            bottom:280px;
+            left:205px;
          }
 
          .textbox{
@@ -77,28 +80,21 @@
             margin:20px 50px 0px 50px;
             border:3px solid black;
             border-radius:5px;
+            position:relative;
+            right:250px;
+            top:50px
          }
 
          .first{
            display:inline-block;
          }
 
-         .second{
-            display:inline-block;
-         }
-         
          .healthInner{
             height:15px;
             border-radius:10px;
             background-color:#00CC99;
             float:left;
             position:relative;
-         }
-
-         #other-player{
-            font-family: 'Inconsolata',sans-serif;
-            position:relative;
-            top:50px;
          }
 
          #sentence1{
@@ -109,51 +105,14 @@
             right:300px;
          }
 
-         #anxious{
-            text-shadow:0 0 60px red;
-            font-size:130px;
-         }
-
-         #dw{
-            font-size:60px;
-         }
-            
-
-         #sentence2{
-            font-size:25px;
-            position:relative;
-            top:20px;
-         }
-
-         #sentence3{
-            font-size:25px;
-            color:white;
-            position:relative;
-            top:20px;
-         }
-
-         #sentence4{
-            position:relative;
-            font-size:25px;
-            top:20px;
-         }
-
-         img{
-            position:relative;
-            bottom:350px;
-            left:200px;
-            height:400px;
-            width:auto;
-         }
-
          .progressBox{
             background-color:black;
             height:80px;
             width:70px;
             border-radius:5px;
             position:relative;
-            bottom:300px;
-            right:440px;
+            bottom:250px;
+            right:233px;
             font-family: 'Inconsolata',sans-serif;
          }
 
@@ -162,52 +121,27 @@
             top:15px;
          }
 
-         #progressBox2{
-            position:relative;
-            left:440px;
-            bottom:402px;
-         }
-
          .complete{
             position:relative;
             color:white;
          }
-
-         #playerOneText{
-            font-family: 'Inconsolata',sans-serif;
-            text-shadow:0 0 10px #00CC99;
-            color:white;
-            -webkit-transform:rotate(-90deg);
-            font-size:80px;
-            position:absolute;
-            right:855px;
-         }
-
-         #playerTwoText{
-            font-family: 'Inconsolata',sans-serif;
-            text-shadow:0 0 10px #00CC99;
-            color:white;
-            -webkit-transform:rotate(90deg);
-            font-size:80px;
-            position:absolute;
-            width:300px;
-            left:-118px;
-            top:140px;
-         }
-
+         
          .countdownText{
             font-family: 'Inconsolata',sans-serif;
             font-size: 5em;
-            color: white;
-            text-shadow:0 0 10px #00CC99;
+            color: black;
+            text-shadow:0 0 40px #00CC99;
             position:absolute;
-            left:500px; 
-            bottom:450px;
+            left:480px; 
+            bottom:350px;
+            z-index:1;
          }
 
          canvas{
             position:relative;
-            right: 0px;
+            width:100px;
+            right:5px;
+            top:40px;
          }
 
          #bottomBar{
@@ -225,18 +159,8 @@
             background-color:black;
             border-radius:5px;
             position:absolute;
-            right:527px;
-            top:280px;
-         }
-         
-         #box2{
-            height:105px;
-            width:355px;
-            background-color:black;
-            border-radius:5px;
-            position:absolute;
-            right:67px;
-            top:277px;
+            right:370px;
+            top:400px;
          }
 
          .comboBox{
@@ -246,6 +170,7 @@
          }
 
          .comboText{
+            font-family: 'Inconsolata',sans-serif;
             color:white;
             position:relative;
             right:130px;
@@ -255,7 +180,6 @@
          
       </style>
 
-      <script src='/_ah/channel/jsapi'></script>
    </head>
    <body> 
       <center>
@@ -267,7 +191,7 @@
       </div>
       </div>
 
-      <div id="container" style="display:none">
+      <div id="container">
          <div class="healthBar first" id="firstBar">
             <div class="healthInner first" id="firstInnerBar" style="width:100%"></div>
          </div>
@@ -290,144 +214,13 @@
       </center>
 
   <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
-  <script src="/js/graphics.js"></script>
-  <script src="/js/game.js"></script>
-      <script>  // <script defer="defer"> wait for the entire page to load before displaying
-
-        
-var state = {
- game_key: '{{ game_key }}',
- me: '{{ me }}'
-};
-
-updateGame = function() {
-   
-   var display = {
-      'other-player': 'none',
-      'container': 'none'
-   }; 
-
-   if (!state.userB || state.userB == '') {
-      display['other-player'] = 'block';
-   }
-   else {
-      display['container'] = 'block';
+  <script src="js/graphics.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+      var counter = 0;
       countDown();
-   }
 
-   for (var label in display) {
-      document.getElementById(label).style.display = display[label];
-   }
-};
-
-// poweruptarget can either be "you" or "opponent"
-doPowerUp = function(powerUpType, powerUpTarget) {
-   // put code here
-   console.log(powerUpType, powerUpTarget);
-}
-
-// status can either be "win" or "lose" for current player
-gameOver = function(status) {
-   // put code here
-   console.log("GAMEOVER: ", status)
-}
-
-sendMessage = function(path, opt_param) {
-   path += '?g=' + state.game_key;
-   if (opt_param) {
-      path += '&' + opt_param;
-   }
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', path, true);
-   xhr.send();
-};
-
-// data should include:
-// block
-// index
-// health
-sendGameStatusMessage = function(data) {
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', '/sync?g=' + state.game_key, true);
-   xhr.setRequestHeader('Content-Type', 'application/json');
-   xhr.send(JSON.stringify(data));
-};
-
-// data should include:
-// type 
-// user
-// (data = {type: "reverse", user: 2343})
-sendPowerUpMessage = function(data) {
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', '/powerup?g=' + state.game_key, true);
-   xhr.setRequestHeader('Content-Type', 'application/json');
-   xhr.send(JSON.stringify(data));
-}
-
-// data should include:
-// win or lose
-sendEndGameMessage = function(status) {
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', '/end?g=' + state.game_key, true);
-   xhr.setRequestHeader('Content-Type', 'application/json');
-   xhr.send(status);
-}
-
-onOpened = function() {
-   sendMessage('/opened');
-};
-   
-onMessage = function(m) {
-   newState = JSON.parse(m.data.replace(/&quot;/g,'"'));
-   state.userA = newState.userA || state.userA;
-   state.userB = newState.userB || state.userB;
-
-   if (newState.powerUpType) {
-      doPowerUp(newState.powerUpType, newState.powerUpTarget);
-   }
-   else if (newState.endGame){
-      gameOver(newState.endGame)
-   }
-   else {
-      if (state.userB == state.me) {
-         if (newState.userABlock != "")
-            state.opponentBlock = newState.userABlock;
-         state.opponentPointerIndex = newState.userAPointerIndex || state.opponentPointerIndex;
-         state.opponentHealth = newState.userAHealth || state.opponentHealth
-      }
-
-      else if (state.userA == state.me) {
-         if (newState.userBBlock != "")
-            state.opponentBlock = newState.userBBlock;
-            state.opponentPointerIndex = newState.userBPointerIndex || state.opponentPointerIndex;
-         state.opponentHealth = newState.userBHealth || state.opponentHealth
-      }
-
-      updateGame();
-   }
-
-}
-
-openChannel = function() {
- var token = '{{ token }}';
- var channel = new goog.appengine.Channel(token);
- var handler = {
-   'onopen': onOpened,
-   'onmessage': onMessage,
-   'onerror': function() {},
-   'onclose': function() {}
- };
- var socket = channel.open(handler);
- socket.onopen = onOpened;
-}
-
-initialize = function() {
- openChannel();
- // initialize game information
- onMessage({data: '{{ initial_message }}'});
-}      
-
-setTimeout(initialize, 100);
-      </script>
+      
+  </script>
    </body>
 </html>

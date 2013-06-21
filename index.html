@@ -48,7 +48,7 @@
 
          #rightContainer{
             position:relative;
-            bottom:280px;
+            bottom:300px;
             height:500px;
             width:800px;
             display:inline-block;
@@ -56,19 +56,18 @@
          }
 
          button{
-            height:50px;
-            width:220px;
+            height:40px;
+            width:200px;
             border-radius:5px;
             border-color:#00CC99;
             font-family: 'Inconsolata', sans-serif;
-            font-size:35px;
+            font-size:30px;
             background-color:gray;
             color:white;
             position:absolute;
             display:block;
             bottom:850px;
-            margin-bottom:10px;
-            top:30px; 
+            margin-bottom:20px;
             left:685px;
          }
 
@@ -136,12 +135,17 @@
 
          #playButton{
             position:absolute;
-            top:0px;
+            bottom:450px;
          }
 
          #rulesButton{
             position:absolute;
-            top:60px;
+            top:90px;
+         }
+
+         #practiceButton{
+            position:absolute;
+            top:40px;
          }
 
 
@@ -163,6 +167,7 @@
             <img id="success" src="assets/typerSuccess.png"/>
             <img id="bubble" src="assets/bubble.png"/>
             <button id="playButton">Play</button>
+            <button id="practiceButton">Practice</button>
             <button id="rulesButton">Rules</button>
         </div>
       </center>
@@ -171,6 +176,10 @@
       <script>
          document.getElementById("playButton").onclick = function(){
             window.location.assign("/game");
+         };
+
+         document.getElementById("practiceButton").onclick = function(){
+            window.location.assign("/practice");
          };
          
          document.getElementById("rulesButton").onclick = function(){
