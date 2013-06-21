@@ -106,10 +106,12 @@
             font-size:100px;
             position:relative;
             text-shadow:0 0 10px #00CC99;
+            right:300px;
          }
 
          #anxious{
             text-shadow:0 0 60px red;
+            font-size:130px;
          }
 
          #dw{
@@ -118,21 +120,29 @@
             
 
          #sentence2{
-            font-size:30px;
+            font-size:25px;
+            position:relative;
+            top:20px;
          }
 
          #sentence3{
-            font-size:30px;
+            font-size:25px;
             color:white;
-            text-shadow:-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            position:relative;
+            top:20px;
          }
 
          #sentence4{
-            font-size:30px;
+            position:relative;
+            font-size:25px;
+            top:20px;
          }
 
          img{
-            height:300px;
+            position:relative;
+            bottom:350px;
+            left:200px;
+            height:400px;
             width:auto;
          }
 
@@ -191,6 +201,15 @@
             margin-top: 10px;
             color: #0c9;
          }
+
+         #bottomBar{
+            background-color:gray;
+            height:130px;
+            width:1000px;
+            border-radius:5px;
+            position:relative;
+            bottom:350px;
+         }
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
@@ -206,11 +225,13 @@
       </div>
 
       <div id='other-player' style='display:none'>
-        <div id="sentence1"><span id="anxious">ANXIOUS</span> FINGERS?<div id="dw">Don't worry!</div></div><br>
+        <div id="sentence1"><div id="anxious">ANXIOUS</div> FINGERS?</div><br>
+        <img src="assets/blueTyper.png"/>
+        <div id="bottomBar">
         <div id="sentence2">Copy and paste this link to a friend:</div>
         <div id='sentence3'>{{ game_link }}</div><br>
-        <img src="assets/blueTyper.png"/>
         <div id="sentence4">We'll load the game automatically once your opponent joins.</div>
+        </div>
       </div>
 
       <div id="container" style="display:none">
