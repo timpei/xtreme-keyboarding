@@ -132,6 +132,10 @@ class IntroPage(webapp2.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, {}))
 
+class RulesPage(webapp2.RequestHandler):
+  def get(self):
+    path = os.path.join(os.path.dirname(__file__), 'rules.html')
+    self.response.out.write(template.render(path, {}))
 
 class OpenedPage(webapp2.RequestHandler):
     def post(self):
@@ -202,6 +206,7 @@ class PowerupPage(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', IntroPage),
+    ('/rules', RulesPage),
     ('/game', MainPage),
     ('/opened', OpenedPage),
     ('/sync', SyncPage),
