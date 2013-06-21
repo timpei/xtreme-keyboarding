@@ -3,6 +3,7 @@ var startgame = false;
 var playerPos = 0;  //ABSOLUTE POSITION IN THE TEXT
 var oppPos = 0; //what player sees as the opp's pos
 var playerHealth = 10;
+var counter = 0;
 
 countDown = function() {
 
@@ -189,17 +190,22 @@ updateOpp = function(oppPosIndex) {
                    correct.start();
                    correct.stop();
                   generatedString = generatedString.substring(1);
+                  counter++;
                   //console.log(generatedString); 
                }
                else {
                 //wave.start();
                   numincorrect++;
                 console.log('Incorrect: ' + numincorrect);
+                counter = 0;
                 // data should include:
 
      // data = { 'block': '', 'index': playerPos, 'health': playerHealth};
      // sendGameStatusMessage(data);
                  }
+                 console.log($(".comboText")[0].innerText);
+                 $(".comboBox")[0].innerText = counter;
+
 
             }); 
  });  //end of event listener
