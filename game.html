@@ -180,9 +180,8 @@
             color:white;
             -webkit-transform:rotate(-90deg);
             font-size:80px;
-            position:relative;
-            right:438px;
-            bottom:370px;
+            position:absolute;
+            right:855px;
          }
 
          #playerTwoText{
@@ -190,18 +189,21 @@
             text-shadow:0 0 10px #00CC99;
             color:white;
             -webkit-transform:rotate(90deg);
-            font-size:50px;
-            position:relative;
-            left:427px;
-            bottom:520px;
+            font-size:80px;
+            position:absolute;
+            width:300px;
+            left:-118px;
+            top:140px;
          }
 
          .countdownText{
             font-family: 'Inconsolata',sans-serif;
             font-size: 5em;
-            margin-top: 10px;
-            color: #0c9;
+            color: white;
+            text-shadow:0 0 10px #00CC99;
             position:absolute;
+            left:500px; 
+            bottom:450px;
          }
 
          canvas{
@@ -281,6 +283,7 @@
          <div class="healthBar second" id="secondBar">
             <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
          </div>
+         <div class="countdownText">5</div>
 
           <div class="textbox first" id="firstBox"> </div>
          <div class="textbox second" id="secondBox"></div>
@@ -318,17 +321,14 @@ countDown = function() {
 
 
           function printBoard(str){
-              document.getElementById("firstBox").innerHTML = '<div class="countdownText">' + str + '</div>';
-              document.getElementById("secondBox").innerHTML = '<div class="countdownText">' + str + '</div>';
+             $(".countdownText").text(str);
           }
-
-          printBoard('READY!');
           
           var i = 5;
 
           setInterval(function(){
             if (i == 0) {
-              printBoard('GO!');
+              printBoard('0');
             }
             else if (i == -1) {
               printBoard('');
@@ -615,140 +615,6 @@ var cur = 0;
 
         setTimeout(initialize, 100);
 
-
-      </script>
-      <script type='text/javascript'>
-var state = {
-   game_key: '{{ game_key }}',
-   me: '{{ me }}',
-};
-
-
-countDown = function() {
-
-   function printBoard(str){
-       document.getElementById("firstBox").innerHTML = '<div class="countdownText">' + str + '</div>';
-       document.getElementById("secondBox").innerHTML = '<div class="countdownText">' + str + '</div>';
-   }
-
-   printBoard('READY!');
-   
-   var i = 5;
-
-   setInterval(function(){
-     if (i == 0) {
-       printBoard('GO!');
-     }
-     else if (i == -1) {
-       printBoard('');
-       return;
-     }
-     else {
-       printBoard(i);
-     }
-     i--;
-   }, 1000);
-}
-countDown();
-
-
-updateGame = function() {
-   
-   var display = {
-      'other-player': 'none',
-      'container': 'none'
-   }; 
-
-   if (!state.userB || state.userB == '') {
-      display['other-player'] = 'block';
-   }
-   else {
-      display['container'] = 'block';
-   }
-
-   for (var label in display) {
-      document.getElementById(label).style.display = display[label];
-   }
-};
-
-sendMessage = function(path, opt_param) {
-   path += '?g=' + state.game_key;
-   if (opt_param) {
-      path += '&' + opt_param;
-   }
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', path, true);
-   xhr.send();
-};
-
-// data should include:
-// block
-// index
-// health
-sendGameStatusMessage = function(data) {
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', '/sync?g=' + state.game_key, true);
-   xhr.setRequestHeader('Content-Type', 'application/json');
-   xhr.send(JSON.stringify(data));
-};
-
-// data should include:
-// type 
-// user
-// (data = {type: "reverse", user: 2343})
-sendPowerUpMessage = function(data) {
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', '/powerup?g=' + state.game_key, true);
-   xhr.setRequestHeader('Content-Type', 'application/json');
-   xhr.send(JSON.stringify(data));
-}
-
-onOpened = function() {
-   sendMessage('/opened');
-};
-   
-onMessage = function(m) {
-   newState = JSON.parse(m.data.replace(/&quot;/g,'"'));
-   state.userA = newState.userA || state.userA;
-   state.userB = newState.userB || state.userB;
-
-   if (state.userB == state.me) {
-      if (newState.userABlock != "")
-         state.opponentBlock = newState.userABlock;
-      state.opponentPointerIndex = newState.userAPointerIndex || state.opponentPointerIndex;
-   }
-
-   else if (state.userA == state.me) {
-      if (newState.userBBlock != "")
-         state.opponentBlock = newState.userBBlock;
-         state.opponentPointerIndex = newState.userBPointerIndex || state.opponentPointerIndex;
-   }
-
-   updateGame();
-
-   //powerup
-}
-
-openChannel = function() {
- var token = '{{ token }}';
- var channel = new goog.appengine.Channel(token);
- var handler = {
-   'onopen': onOpened,
-   'onmessage': onMessage,
-   'onerror': function() {},
-   'onclose': function() {}
- };
- var socket = channel.open(handler);
- socket.onopen = onOpened;
-}
-
-initialize = function() {
- openChannel();
- // initialize game information
- onMessage({data: '{{ initial_message }}'});
-}      
-
-setTimeout(initialize, 100);
 
       </script>
    </body>
