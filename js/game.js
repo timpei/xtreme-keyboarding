@@ -1,7 +1,8 @@
 var startgame = false;
+var playerPos = 0;
+var playerHealth = 10;
 
 countDown = function() {
-
 
           function printBoard(str){
              $(".countdownText").text(str);
@@ -26,7 +27,6 @@ countDown = function() {
           console.log(startgame);
         }
 
-
 var stage = new Kinetic.Stage({
         container: 'firstBox',
         width: 900,
@@ -37,8 +37,7 @@ var circleLayer = new Kinetic.Layer();
 var circle = new Kinetic.Circle({
         x: 1,
         y: 1,
-        radius: 100,
-        stroke: 'red'
+        radius: 1,
       });
 
 stage.add(circleLayer);
@@ -55,7 +54,9 @@ waiting.stop();
  console.log('pressdown');
 
      
-  var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three hundred years ago, people have been searching for its resting place.";
+  var generatedStringOrig = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three hundred years ago, people have been searching for its resting place.";
+
+  var generatedString = generatedStringOrig;
     
       var layer = new Kinetic.Layer();
       var canvases = document.getElementsByTagName("canvas");
@@ -63,9 +64,13 @@ waiting.stop();
           var xmult = 0;
           var ymult = 0;
 
+            var numLines = 5;
+            var numChar = 24;
+            var numInBlock = numLines * numChar;
+
 //your text
 //for each character in the string/block of test, create a canvas element thing
-      for(var n = 0; n < generatedString.length; n++) {        
+      for(var n = 0; n < numInBlock; n++) {        
   
           //every time maxchar is reached, make a new line
           if( (n+1)%25 == 0 ) {
@@ -89,7 +94,7 @@ waiting.stop();
             
           var text = new Kinetic.Text({
              x: xmult * 13,
-             y: ymult * 20,
+             y: ymult * 40,
             fill: color,
             text: generatedString[i],
             name: 'text',
@@ -109,7 +114,7 @@ var ymult2 = 0;
 //opponent's text
 var layer2 = new Kinetic.Layer();
 
-for(var n = 0; n < generatedString.length; n++) {        
+for(var n = 0; n < numInBlock; n++) {        
   
           //every time maxchar is reached, make a new line
           if( (n+1)%25 == 0 ) {
@@ -122,7 +127,7 @@ for(var n = 0; n < generatedString.length; n++) {
           var i = n;
           var text = new Kinetic.Text({
              x: xmult2 * 13 + 460,
-             y: ymult2 * 20,
+             y: ymult2 * 40,
             fill: 'black',
             text: generatedString[i],
             name: 'text',
@@ -133,9 +138,15 @@ for(var n = 0; n < generatedString.length; n++) {
       }
 
       stage.add(layer2);
+//end of the opponent's text
 
-var cur = 0;
-      var clear = false;
+updateOpp = function(oppPos) {
+
+
+}
+
+    var cur = 0;
+      
 
       var correct = new Kinetic.Animation(function(frame) {
         var word = alltext[cur];  
@@ -150,20 +161,10 @@ var cur = 0;
         }
         cur++;
       }, layer );
-
-     // function wave(n) {
-          var wave = new Kinetic.Animation(function(frame) {
-          var time = frame.time;
-          var n = cur;
-          var word = alltext[0];
-          word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
-        }, layer);
-      //}  //end of wave function
       
-
-
       var alltext = stage.get('.text');
       var numincorrect = 0;
+
 //look for keypress and check if key press is equal to current character
              $(document).keypress(function(evt){
               evt.preventDefault()
@@ -181,6 +182,10 @@ var cur = 0;
                 //wave.start();
                   numincorrect++;
                 console.log('Incorrect: ' + numincorrect);
+                // data should include:
+
+      data = { 'block': '', 'index': playerPos, 'health': playerHealth};
+      sendGameStatusMessage(data);
               }
 
             }); 
