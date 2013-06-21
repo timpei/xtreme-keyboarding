@@ -161,6 +161,11 @@ class RulesPage(webapp2.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'rules.html')
     self.response.out.write(template.render(path, {}))
 
+class PracticePage(webapp2.RequestHandler):
+  def get(self):
+    path = os.path.join(os.path.dirname(__file__), 'singleGame.html')
+    self.response.out.write(template.render(path, {}))
+
 class OpenedPage(webapp2.RequestHandler):
     def post(self):
         game = GameFromRequest(self.request).get_game()
@@ -241,12 +246,11 @@ class EndGamePage(webapp2.RequestHandler):
         status = request
         );
 
-
-
 app = webapp2.WSGIApplication([
     ('/', IntroPage),
     ('/rules', RulesPage),
     ('/game', MainPage),
+    ('/practice', PracticePage),
     ('/opened', OpenedPage),
     ('/sync', SyncPage),
     ('/powerup', PowerupPage),
