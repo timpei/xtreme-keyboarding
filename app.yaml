@@ -7,6 +7,8 @@ threadsafe: yes
 handlers:
 - url: /assets
   static_dir: assets
+- url: /js
+  static_dir: js
 - url: .*
   script: typing.app
 

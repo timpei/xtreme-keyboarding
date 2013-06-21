@@ -81,7 +81,6 @@
 
          .first{
            display:inline-block;
-           position:relative;
          }
 
          .second{
@@ -231,13 +230,13 @@
          }
          
          #box2{
-            height:100px;
+            height:105px;
             width:355px;
             background-color:black;
             border-radius:5px;
             position:absolute;
             right:67px;
-            top:280px;
+            top:277px;
          }
 
          .comboBox{
@@ -252,6 +251,8 @@
             right:130px;
             bottom:15px;
          }
+
+         
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
@@ -343,7 +344,6 @@ countDown = function() {
           console.log(startgame);
         }
 
- countDown();
 
 var stage = new Kinetic.Stage({
         container: 'firstBox',
@@ -542,9 +542,6 @@ var cur = 0;
             }
          }
         
-
-
-     
 var state = {
  game_key: '{{ game_key }}',
  me: '{{ me }}'
@@ -562,6 +559,7 @@ updateGame = function() {
    }
    else {
       display['container'] = 'block';
+      countDown();
    }
 
    for (var label in display) {
