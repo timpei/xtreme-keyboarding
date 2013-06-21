@@ -140,6 +140,8 @@
             font-size: 5em;
             margin-top: 10px;
             color: #0c9;
+            text-align: auto;
+            position: absolute;
          }
       </style>
 
@@ -181,12 +183,6 @@
 
   var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
 
-      
-
-
-
-
-
       var stage = new Kinetic.Stage({
         container: 'firstBox',
         width: 350,
@@ -226,7 +222,7 @@
 
       stage.add(layer);
 
-var cur = 0;
+      var cur = 0;
       var clear = false;
 
       var correct = new Kinetic.Animation(function(frame) {
@@ -243,8 +239,6 @@ var cur = 0;
           word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
         }, layer);
       //}  //end of wave function
-      
-
 
       var alltext = stage.get('.text');
 
@@ -332,8 +326,9 @@ var cur = 0;
           else {
               display['container'] = 'block';
               countDown();
-              renderText();
-              
+
+              // REMEMBER TO DELETE: test function
+              doPowerUp("player", 3, 0);
           }
           
           for (var label in display) {
@@ -342,6 +337,10 @@ var cur = 0;
 
           
         };
+
+
+// ################################ NEED TO COPY THESE TO GAME.HTML #####################################################################
+
 
         // LEAVE IT THERE IN CASE. Ethan's way of rendering the text using <div>s
         //renderText = function() {
@@ -383,7 +382,17 @@ var cur = 0;
            }
            */
 
-        doPowerUp = function(user, powerType) {
+  
+        // Replace a character in a string
+        String.prototype.replaceAt = function (i, char) {
+
+            return this.substr(0, i) + char + this.substr(i + char.length);
+
+        }
+
+        
+
+        doPowerUp = function(user, powerType, pointer) {
           // When the powerUp is applied on the user herself.
           var boxID = function() {
             if (user == "player") 
@@ -393,13 +402,18 @@ var cur = 0;
             else
               return "Throw Exception for powerUp function.";
           }
+
           switch (powerType) {
+
             case 1: // Reversed Words
+
               // cursor goes to the last of the word and goes back and goes to the end of the next word
-              // var lastTyped = pointer - 1; 
-              // var toBePointer = pointer;
-              // while ((toBePointer != ' ') && (toBePointer < generatedString.length)) toBePointer++;
-              // pointer = toBePointer - 1;
+              // Why not just change the layout?
+              var lastTyped = pointer - 1; 
+              var toBePointer = pointer;
+              while ((toBePointer != ' ') && (toBePointer < generatedString.length)) toBePointer++;
+              pointer = toBePointer - 1;
+
               //   $/ Ethan: A little confused here
               //    / as the user types, the cursor goes from pointer -> lastTyped + 1, inclusive.
               //    / and then, if toBePointer != generatedString.length - 1 then pointer = toBePointer;
@@ -408,18 +422,49 @@ var cur = 0;
               //    / lastTyped = pointer - 1;  and do again.
               break;
             case 2: // Alternative Caps
-              // Change all the words to be in alternative caps
-              // for i = pointer:2:endOfText :
-              //   generatedString = generatedString[0:i-1]+generatedString.charAt(i).upper()+charAt(i+1).lower()+generatedString[i+2:];
+              var changedString = generatedString;
+              for (var i = pointer; i < changedString.length; i++) {
+                if (i % 2 == 0) {
+                  changedString = changedString.replaceAt(i, changedString.charAt(i).toUpperCase());
+                }
+                else{
+                  changedString = changedString.replaceAt(i, changedString.charAt(i).toLowerCase());
+                }
+              }
               break;
             case 3: // Invisible Vowels
+              var vowels = new Array('A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u');
+              var changedString = generatedString;
+              vowelCheck = function(char) {
+                for(var i in vowels){
+                  if(char == vowels[i]) 
+                    return true;
+                }
+                return false;
+              }
+
+              for (var i = pointer; i < changedString.length; i++) {
+                if (vowelCheck(changedString.charAt(i))) {
+                  changedString = changedString.replaceAt(i, '&');
+                }
+              }
+
+              for (var i = pointer; i < alltext.length; i++) {
+                
+              }
+
                 // Change all the vowels to invisible
                 // for i = pointer:endOfText :
                 //   if generatedString.charAt(i) in 'AaEeIiOoUu':
                 //     generatedString.charAt(i).canvasObject.css("display", "none");
               break;
 
+            default:
+              console.log("Throw Exception: Wrong Powerup Type!");
+
           }
+
+          
 
           // Time the powerUp
           // isPowerUp()
@@ -428,6 +473,15 @@ var cur = 0;
 
 
         }
+
+        endPowerUp = function() {
+
+        }
+
+
+
+// ############################################# NEED TO COPY THE ABOVE TEXT TO GAME.HTML ##################################
+
 
 
         

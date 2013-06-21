@@ -143,7 +143,7 @@ class MainPage(webapp2.RequestHandler):
                                    'initial_message': GameUpdater(game).get_game_message()
                                    }
                 print template_values
-                path = os.path.join(os.path.dirname(__file__), 'game_test.html')
+                path = os.path.join(os.path.dirname(__file__), 'game.html')
 
                 self.response.out.write(template.render(path, template_values))
             else:
