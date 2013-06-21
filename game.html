@@ -39,7 +39,11 @@
             top:30px;
             background-color:gray;
             padding:10px 0px 0px 0px;
+<<<<<<< HEAD
             margin:100px 100px 100px 200px;
+=======
+            margin:0px 0px 100px 0px;
+>>>>>>> ac1a81ca06ab3d56eb26678c098aeefd43b74388
             border-radius:5px;
          }
   
@@ -203,7 +207,6 @@
             color: #0c9;
          }
 
-
          canvas{
             position:relative;
             right: 0px;
@@ -215,7 +218,6 @@
             border-radius:5px;
             position:relative;
             bottom:350px;
-
          }
       </style>
 
@@ -248,7 +250,11 @@
          <div class="healthBar second" id="secondBar">
             <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
          </div>
+<<<<<<< HEAD
           <div class="textbox first" id="firstBox"> </div>
+=======
+         <div class="textbox first" id="firstBox"></div>
+>>>>>>> ac1a81ca06ab3d56eb26678c098aeefd43b74388
          <div class="textbox second" id="secondBox"></div>
          <div class="progressBox" id="progressBox1">
             <h1 class="progress" id="progress1">0%</h1> 
@@ -257,6 +263,14 @@
          <div class="progressBox" id="progressBox2">
             <h1 class="progress" id="progress2">0%</h1> 
             <h5 class="complete">complete</h5>
+<<<<<<< HEAD
+=======
+         </div>
+
+         <h1 id="playerOneText">YOU</h1>
+         <h1 id="playerTwoText">NOT YOU</h1>
+             
+>>>>>>> ac1a81ca06ab3d56eb26678c098aeefd43b74388
          </div>
 
          <h1 id="playerOneText">YOU</h1>
@@ -404,6 +418,7 @@ var cur = 0;
                } else {
                   $("#firstInnerBar")[0].style.backgroundColor = "red";
                }
+<<<<<<< HEAD
 
                    
             } else {
@@ -418,6 +433,22 @@ var cur = 0;
             }
          }
 
+=======
+
+                   
+            } else {
+               $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
+               if(parseFloat($("#secondInnerBar")[0].style.width) > 75){
+                  $("#secondInnerBar")[0].style.backgroundColor = "#00CC99";
+               } else if(parseFloat($("#secondInnerBar")[0].style.width) > 30){
+                  $("#secondInnerBar")[0].style.backgroundColor = "orange";
+               } else {
+                  $("#secondInnerBar")[0].style.backgroundColor = "red";
+               }
+            }
+         }
+
+>>>>>>> ac1a81ca06ab3d56eb26678c098aeefd43b74388
          function updateProgress(player){
             if(player == 1){
                if(parseFloat($("#progress1")[0].innerText) < 100)
@@ -462,7 +493,11 @@ var cur = 0;
             i--;
           }, 1000);
         }
+<<<<<<< HEAD
         //countDown();
+=======
+        countDown();
+>>>>>>> ac1a81ca06ab3d56eb26678c098aeefd43b74388
 
         updateGame = function() {
           
