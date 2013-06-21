@@ -67,14 +67,16 @@ class GameUpdater():
       message = {
         'userABlock': allMessage['userABlock'],
         'userAPointerIndex': allMessage['userAPointerIndex'],
-        'userAHealth': allMessage['userAHealth']
+        'userAHealth': allMessage['userAHealth'],
+        'userAProgress': allMessage['userAProgress']
       }
       channel.send_message(self.game.userB.user_id() + self.game.key().id_or_name(), json.dumps(message))
     else:
       message = {
         'userBBlock': allMessage['userBBlock'],
         'userBPointerIndex': allMessage['userBPointerIndex'],
-        'userBHealth': allMessage['userBHealth']
+        'userBHealth': allMessage['userBHealth'],
+        'userBProgress': allMessage['userBProgress']
       }
       channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
 
@@ -207,6 +209,8 @@ class SyncPage(webapp2.RequestHandler):
     request = json.loads(self.request.body)
     if (not request.has_key('block')):
       request['block'] = ''
+    if (not request.has_key('progress')):
+      request['progress'] = ''
     if game and user:
         GameUpdater(game).sync_opp_data(
           block = request['block'],
