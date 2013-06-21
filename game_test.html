@@ -140,13 +140,12 @@
             font-size: 5em;
             margin-top: 10px;
             color: #0c9;
+            text-align: auto;
+            position: absolute;
          }
       </style>
 
       <script src='/_ah/channel/jsapi'></script>
-    
-≈
-
    </head>
    <body> 
       <center>
@@ -166,16 +165,6 @@
         <div id="sentence4">We'll load the game automatically once your opponent joins.</div>
       </div>
 
-<<<<<<< HEAD
-      <div id="container">
-         <button id="test">click</button>
-         <div class="healthBar first" id="firstBar"><div class="healthInner first" id="firstInnerBar" style="width:100%"></div></div>
-         <div class="healthBar second" id="secondBar"><div class="healthInner second" id="secondInnerBar" style="width:100%"></div></div>
-         <div class="textbox first" id="firstBox"> 
-
-
-         </div>
-=======
       <div id="container" style="display:none">
          <div class="healthBar first" id="firstBar">
             <div class="healthInner first" id="firstInnerBar" style="width:100%"></div>
@@ -184,7 +173,6 @@
             <div class="healthInner second" id="secondInnerBar" style="width:100%"></div>
          </div>
          <div class="textbox first" id="firstBox"></div>
->>>>>>> fc96e3894860f6c2005e31dd7d0050259c2dc361
          <div class="textbox second" id="secondBox"></div>
          </div>
       </center>
@@ -234,7 +222,7 @@
 
       stage.add(layer);
 
-var cur = 0;
+      var cur = 0;
       var clear = false;
 
       var correct = new Kinetic.Animation(function(frame) {
@@ -251,8 +239,6 @@ var cur = 0;
           word.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
         }, layer);
       //}  //end of wave function
-      
-
 
       var alltext = stage.get('.text');
 
@@ -312,9 +298,11 @@ var cur = 0;
           setInterval(function(){
             if (i == 0) {
               printBoard('GO!');
+              //console.log(i);
             }
             else if (i == -1) {
               printBoard('');
+
               return;
             }
             else {
@@ -322,8 +310,8 @@ var cur = 0;
             }
             i--;
           }, 1000);
-        }
-        countDown();
+
+      }
 
         updateGame = function() {
           
@@ -337,12 +325,165 @@ var cur = 0;
           }
           else {
               display['container'] = 'block';
+              countDown();
+
+              // REMEMBER TO DELETE: test function
+              doPowerUp("player", 3, 0);
           }
           
           for (var label in display) {
             document.getElementById(label).style.display = display[label];
           }
+
+          
         };
+
+
+// ################################ NEED TO COPY THESE TO GAME.HTML #####################################################################
+
+
+        // LEAVE IT THERE IN CASE. Ethan's way of rendering the text using <div>s
+        //renderText = function() {
+          /*var generatedString = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.";
+
+          console.log(generatedString);
+
+              for (var i = 0; i < generatedString.length; i++) {
+                var charStatus = 'inactive';
+                if (i == 0) charStatus = 'active';
+                console.log('What happened?');
+                document.getElementById("firstBox").appendChild('<div class="' + charStatus + '">' + generatedString.charAt(i) + '</div>');
+              }
+          }*/
+
+        // Ethan's thought of how the game will run  
+        // playGame = function() {
+          /* Powerdowns
+           * If you type right 50 characters in a row, it will trigger a powerdown on your opponent. If you type wrong two characters in a row, it will * * trigger powerdown on yourself.
+           * The effects of the game include:
+           * 1. Reversed Words!
+           * 2. Alternative Caps!
+           * 3. Invisible Vowels!
+           */
+
+           
+           // var pointer = 0;
+           /* while user input a char {
+              var char = user input;
+              var error = 0;
+              while (pointer <= generatedString) {
+                while (char != generatedString.charAt(pointer)) {
+                  error++;
+                  if (error == 2) {
+                   powerDown("");
+                  }
+                }
+              }
+           }
+           */
+
+  
+        // Replace a character in a string
+        String.prototype.replaceAt = function (i, char) {
+
+            return this.substr(0, i) + char + this.substr(i + char.length);
+
+        }
+
+        
+
+        doPowerUp = function(user, powerType, pointer) {
+          // When the powerUp is applied on the user herself.
+          var boxID = function() {
+            if (user == "player") 
+              return "firstBox";
+            else if (user == "other-player")
+              return "secondBox";
+            else
+              return "Throw Exception for powerUp function.";
+          }
+
+          switch (powerType) {
+
+            case 1: // Reversed Words
+
+              // cursor goes to the last of the word and goes back and goes to the end of the next word
+              // Why not just change the layout?
+              var lastTyped = pointer - 1; 
+              var toBePointer = pointer;
+              while ((toBePointer != ' ') && (toBePointer < generatedString.length)) toBePointer++;
+              pointer = toBePointer - 1;
+
+              //   $/ Ethan: A little confused here
+              //    / as the user types, the cursor goes from pointer -> lastTyped + 1, inclusive.
+              //    / and then, if toBePointer != generatedString.length - 1 then pointer = toBePointer;
+              //    / after typed pointer, pointer++ until string.charAt(pointer) != ' ' or pointer <= str.len - 1.
+              //    / then do toBePointer = pointer; while ((toBePointer != ' ') && (toBePointer < generatedString.length)) toBePointer++;
+              //    / lastTyped = pointer - 1;  and do again.
+              break;
+            case 2: // Alternative Caps
+              var changedString = generatedString;
+              for (var i = pointer; i < changedString.length; i++) {
+                if (i % 2 == 0) {
+                  changedString = changedString.replaceAt(i, changedString.charAt(i).toUpperCase());
+                }
+                else{
+                  changedString = changedString.replaceAt(i, changedString.charAt(i).toLowerCase());
+                }
+              }
+              break;
+            case 3: // Invisible Vowels
+              var vowels = new Array('A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u');
+              var changedString = generatedString;
+              vowelCheck = function(char) {
+                for(var i in vowels){
+                  if(char == vowels[i]) 
+                    return true;
+                }
+                return false;
+              }
+
+              for (var i = pointer; i < changedString.length; i++) {
+                if (vowelCheck(changedString.charAt(i))) {
+                  changedString = changedString.replaceAt(i, '&');
+                }
+              }
+
+              for (var i = pointer; i < alltext.length; i++) {
+                
+              }
+
+                // Change all the vowels to invisible
+                // for i = pointer:endOfText :
+                //   if generatedString.charAt(i) in 'AaEeIiOoUu':
+                //     generatedString.charAt(i).canvasObject.css("display", "none");
+              break;
+
+            default:
+              console.log("Throw Exception: Wrong Powerup Type!");
+
+          }
+
+          
+
+          // Time the powerUp
+          // isPowerUp()
+          // typed, untyped, highlighted
+          // Instead of having the typed text as green, we should have the background-color be green; cursor should render the corresponding text as red.
+
+
+        }
+
+        endPowerUp = function() {
+
+        }
+
+
+
+// ############################################# NEED TO COPY THE ABOVE TEXT TO GAME.HTML ##################################
+
+
+
         
         sendMessage = function(path, opt_param) {
           path += '?g=' + state.game_key;
