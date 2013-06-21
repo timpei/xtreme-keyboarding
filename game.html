@@ -33,7 +33,7 @@
         }
 
          #container{
-            height:480px;
+            height:550px;
             width:1050px;
             position:relative;
             top:30px;
@@ -197,10 +197,11 @@
          }
 
          .countdownText{
-            font-family: Inconsolata;
+            font-family: 'Inconsolata',sans-serif;
             font-size: 5em;
             margin-top: 10px;
             color: #0c9;
+            position:absolute;
          }
 
          canvas{
@@ -215,6 +216,39 @@
             border-radius:5px;
             position:relative;
             bottom:350px;
+         }
+
+         #box1{
+            height:100px;
+            width:355px;
+            background-color:black;
+            border-radius:5px;
+            position:absolute;
+            right:527px;
+            top:280px;
+         }
+         
+         #box2{
+            height:100px;
+            width:355px;
+            background-color:black;
+            border-radius:5px;
+            position:absolute;
+            right:67px;
+            top:280px;
+         }
+
+         .comboBox{
+            font-family: 'Inconsolata',sans-serif;
+            position:relative;
+            right:130px;
+         }
+
+         .comboText{
+            color:white;
+            position:relative;
+            right:130px;
+            bottom:15px;
          }
       </style>
 
@@ -258,7 +292,16 @@
          <div class="progressBox" id="progressBox2">
             <h1 class="progress" id="progress2">0%</h1> 
             <h5 class="complete">complete</h5>
+         <div id="box1">
+            <h1 class="comboBox" id="comboxBox1">0</h1>
+            <div class="comboText" id="comboText1">combo</div>
+            <div class="messageBox" id="messageBox1"></div>
+         </div>
 
+         <div id="box2">
+            <h1 class="comboBox" id="comboxBox2">0</h1>
+            <div class="comboText" id="comboText2">combo</div>
+            <div class="messageBox" id="messageBox2"></div>
          </div>
 
          <h1 id="playerOneText">YOU</h1>
