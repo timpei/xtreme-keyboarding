@@ -373,6 +373,7 @@ sendMessage = function(path, opt_param) {
 // block
 // index
 // health
+// progress
 sendGameStatusMessage = function(data) {
    var xhr = new XMLHttpRequest();
    xhr.open('POST', '/sync?g=' + state.game_key, true);
@@ -421,6 +422,7 @@ onMessage = function(m) {
             state.opponentBlock = newState.userABlock;
          state.opponentPointerIndex = newState.userAPointerIndex || state.opponentPointerIndex;
          state.opponentHealth = newState.userAHealth || state.opponentHealth
+         state.opponentProgress = newState.userAProgress || state.opponentProgress
       }
 
       else if (state.userA == state.me) {
@@ -428,6 +430,7 @@ onMessage = function(m) {
             state.opponentBlock = newState.userBBlock;
             state.opponentPointerIndex = newState.userBPointerIndex || state.opponentPointerIndex;
          state.opponentHealth = newState.userBHealth || state.opponentHealth
+         state.opponentProgress = newState.userBProgress || state.opponentProgress
       }
 
       updateGame();

@@ -23,6 +23,8 @@ class Game(db.Model):
   userBPowerupDuration = db.IntegerProperty()
   userAHealth = db.IntegerProperty()
   userBHealth = db.IntegerProperty()
+  userAProgress = db.IntegerProperty()
+  userBProgress = db.IntegerProperty()
   winner = db.StringProperty()
 
 class GameUpdater():
@@ -41,6 +43,8 @@ class GameUpdater():
       'userBPointerIndex': self.game.userBPointerIndex,
       'userAHealth': self.game.userAHealth,
       'userBHealth': self.game.userBHealth,
+      'userAProgress': self.game.userAProgress,
+      'userBProgress': self.game.userBProgress,
       'winner': self.game.winner,
     }
 
@@ -111,13 +115,15 @@ class GameUpdater():
     if player.user_id() == allMessage['userB']:
       channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
 
-  def sync_opp_data(self, block, index, health):
+  def sync_opp_data(self, block, index, health, progress):
     player = users.get_current_user();
     if player == self.game.userA:
       if block:
         self.game.userABlock = block
       self.game.userAPointerIndex = index
       self.game.userAHealth = health
+      if progress:
+        self.game.userAProgress = progress
       self.game.put()
       self.send_opp_data(player)
     elif player == self.game.userB:
@@ -125,6 +131,8 @@ class GameUpdater():
         self.game.userBBlock = block
       self.game.userBPointerIndex = index
       self.game.userBHealth = health
+      if progress:
+        self.game.userBProgress = progress
       self.game.put()
       self.send_opp_data(player)
 
@@ -197,11 +205,14 @@ class SyncPage(webapp2.RequestHandler):
     game = GameFromRequest(self.request).get_game()
     user = users.get_current_user()
     request = json.loads(self.request.body)
+    if (not request.has_key('block')):
+      request['block'] = ''
     if game and user:
         GameUpdater(game).sync_opp_data(
           block = request['block'],
           index = request['index'],
-          health = request['health']
+          health = request['health'],
+          progress = request['progress']
           );
 
 
