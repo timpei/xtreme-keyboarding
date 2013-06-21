@@ -74,6 +74,29 @@ class GameUpdater():
       }
       channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
 
+  def send_powerup(self, powerUpType, affectedUser):
+    player = users.get_current_user();
+    allMessage = self.get_game_message(jsonResult = False)
+
+    print player.user_id()
+    print allMessage
+    print type
+    print affectedUser
+
+    message = {
+      'powerUpType': powerUpType
+    }
+
+    if player.user_id() == affectedUser:
+      message['powerUpTarget'] = 'opponent'
+    else:
+      message['powerUpTarget'] = 'you'
+
+    if player.user_id() == allMessage['userA']:
+      channel.send_message(self.game.userB.user_id() + self.game.key().id_or_name(), json.dumps(message))
+    if player.user_id() == allMessage['userB']:
+      channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
+
   def sync_opp_data(self, block, index, health):
     player = users.get_current_user();
     if player == self.game.userA:
@@ -171,8 +194,8 @@ class PowerupPage(webapp2.RequestHandler):
     request = json.loads(self.request.body)
     if game and user:
       GameUpdater(game).send_powerup(
-        type = request['type'],
-        user = request['user']
+        powerUpType = request['type'],
+        affectedUser = request['user']
         ); 
 
 
