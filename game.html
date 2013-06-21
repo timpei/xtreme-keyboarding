@@ -325,6 +325,7 @@ var state = {
  me: '{{ me }}'
 };
 
+
 updateGame = function() {
    
    var display = {
@@ -343,9 +344,19 @@ updateGame = function() {
    for (var label in display) {
       document.getElementById(label).style.display = display[label];
    }
-   //char at this pos should be red, everything before is green
-   var oppPos = state.opponentPointerIndex;
-   //updateOpp(oppPos); 
+
+   
+     //char at this pos should be red, everything before is green
+     var oppPos = state.opponentPointerIndex;
+     if(oppPos > oppPos) {
+    for(var n=oppPos; n < oppPos; n++) {
+      word = alltextOpp[n];
+      word.setFill('green');
+      word.setFontStyle('bold italic');
+    alltextOpp[oppPosIndex].setFill('red');
+    }
+  }
+   
 };
 
 // poweruptarget can either be "you" or "opponent"
@@ -376,6 +387,7 @@ sendMessage = function(path, opt_param) {
 // health
 // progress
 sendGameStatusMessage = function(data) {
+   console.log("sending data", data);
    var xhr = new XMLHttpRequest();
    xhr.open('POST', '/sync?g=' + state.game_key, true);
    xhr.setRequestHeader('Content-Type', 'application/json');
