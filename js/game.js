@@ -1,5 +1,7 @@
+var singlePlayer = true;
 var startgame = false;
-var playerPos = 0;
+var playerPos = 0;  //ABSOLUTE POSITION IN THE TEXT
+var oppPos = 0; //what player sees as the opp's pos
 var playerHealth = 10;
 
 countDown = function() {
@@ -112,6 +114,7 @@ waiting.stop();
 var ymult2 = 0;
 
 //opponent's text
+if(singlePlayer == false) {
 var layer2 = new Kinetic.Layer();
 
 for(var n = 0; n < numInBlock; n++) {        
@@ -138,11 +141,21 @@ for(var n = 0; n < numInBlock; n++) {
       }
 
       stage.add(layer2);
+  }
 //end of the opponent's text
+var alltextOpp = stage.get('.text');  //an array of opp's current block char
 
-updateOpp = function(oppPos) {
+//oppPosIndex is the position in the block (not for all blocks)
+updateOpp = function(oppPosIndex) {
+  if(oppPosIndex > oppPos) {
+    for(var n=oppPos; n < oppPosIndex; n++) {
+      word = alltextOpp[n];
+      word.setFill('green');
+      word.setFontStyle('bold italic');
+    alltextOpp[oppPosIndex].setFill('red');
+    }
 
-
+  }
 }
 
     var cur = 0;
@@ -184,9 +197,9 @@ updateOpp = function(oppPos) {
                 console.log('Incorrect: ' + numincorrect);
                 // data should include:
 
-      data = { 'block': '', 'index': playerPos, 'health': playerHealth};
-      sendGameStatusMessage(data);
-              }
+     // data = { 'block': '', 'index': playerPos, 'health': playerHealth};
+     // sendGameStatusMessage(data);
+                 }
 
             }); 
  });  //end of event listener
