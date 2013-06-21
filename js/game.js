@@ -1,4 +1,4 @@
-var singlePlayer = true;
+var singlePlayer = false;
 var startgame = false;
 var playerPos = 0;  //ABSOLUTE POSITION IN THE TEXT
 var oppPos = 0; //what player sees as the opp's pos
@@ -28,6 +28,19 @@ countDown = function() {
           }, 1000);
           console.log(startgame);
         }
+
+
+//oppPosIndex is the position in the block (not for all blocks)
+var updateOpp = function(oppPosIndex) {
+  if(oppPosIndex > oppPos) {
+    for(var n=oppPos; n < oppPosIndex; n++) {
+      word = alltextOpp[n];
+      word.setFill('green');
+      word.setFontStyle('bold italic');
+    alltextOpp[oppPosIndex].setFill('red');
+    }
+  }
+}
 
 var stage = new Kinetic.Stage({
         container: 'firstBox',
@@ -145,18 +158,6 @@ for(var n = 0; n < numInBlock; n++) {
 //end of the opponent's text
 var alltextOpp = stage.get('.text');  //an array of opp's current block char
 
-//oppPosIndex is the position in the block (not for all blocks)
-updateOpp = function(oppPosIndex) {
-  if(oppPosIndex > oppPos) {
-    for(var n=oppPos; n < oppPosIndex; n++) {
-      word = alltextOpp[n];
-      word.setFill('green');
-      word.setFontStyle('bold italic');
-    alltextOpp[oppPosIndex].setFill('red');
-    }
-
-  }
-}
 
     var cur = 0;
       
@@ -190,6 +191,7 @@ updateOpp = function(oppPosIndex) {
                    correct.stop();
                   generatedString = generatedString.substring(1);
                   //console.log(generatedString); 
+                  playerPos++;
                }
                else {
                 //wave.start();
@@ -197,8 +199,8 @@ updateOpp = function(oppPosIndex) {
                 console.log('Incorrect: ' + numincorrect);
                 // data should include:
 
-     // data = { 'block': '', 'index': playerPos, 'health': playerHealth};
-     // sendGameStatusMessage(data);
+      data = { 'block': '', 'index': playerPos, 'health': playerHealth};
+      sendGameStatusMessage(data);
                  }
 
             }); 
