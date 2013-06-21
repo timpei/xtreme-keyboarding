@@ -68,9 +68,9 @@
             background-color:white;
             margin:50px 50px 0px 50px;
             border-radius:10px;
-            position:relative;
-            bottom:280px;
-            left:205px;
+            position:absolute;
+            left:270px;
+            top:-20px;
          }
 
          .textbox{
@@ -80,8 +80,8 @@
             margin:20px 50px 0px 50px;
             border:3px solid black;
             border-radius:5px;
-            position:relative;
-            right:250px;
+            position:absolute;
+            right:320px;
             top:50px
          }
 
@@ -154,28 +154,59 @@
          }
 
          #box1{
-            height:100px;
-            width:355px;
-            background-color:black;
-            border-radius:5px;
-            position:absolute;
-            right:370px;
-            top:400px;
+            height: 80px;
+            width: 70px;
+            background-color: black;
+            border-radius: 5px;
+            position: absolute;
+            right: 722px;
+            top: 100px;
          }
 
          .comboBox{
             font-family: 'Inconsolata',sans-serif;
             position:relative;
-            right:130px;
+            bottom:10px;
          }
 
          .comboText{
             font-family: 'Inconsolata',sans-serif;
             color:white;
             position:relative;
-            right:130px;
-            bottom:15px;
+            bottom:25px;
          }
+
+         #box2{
+            height:80px;
+            width:70px;
+            background-color: black;
+            border-radius: 5px;
+            position: relative;
+            right: 233px;
+            top: 233px;
+         }
+         
+         .completedText{
+            font-family: 'Inconsolata',sans-serif;
+            color:white;
+            position:relative;
+            bottom:5px;
+         }
+
+         .progressText{
+            position:relative;
+            bottom:0px;
+         }
+
+         #singlePlayer{
+            -webkit-transform: rotate(90deg);
+            font-size: 50px;
+            position: relative;
+            top: 50px;
+            left: 180px;
+         }
+
+
 
          
       </style>
@@ -197,29 +228,31 @@
          </div>
           <div class="countdownText">5</div>
 
+          <div class="main">
           <div class="textbox first" id="firstBox"> </div>
-         <div class="progressBox" id="progressBox1">
-            <h1 class="progress" id="progress1">0%</h1> 
-            <h5 class="complete">complete</h5>
          </div>
          <div id="box1">
             <h1 class="comboBox" id="comboxBox1">0</h1>
             <div class="comboText" id="comboText1">combo</div>
             <div class="messageBox" id="messageBox1"></div>
          </div>
+         <div id="box2">
+            <h1 class="progressText">0</h1>
+            <div class="completedText">complete</div>
+         </div>
 
-         <h1 id="playerOneText">YOU</h1>
-             
+         <h1 id="singlePlayer">SINGLE MODE</h1>
+     </div>
+
          </div>
       </center>
 
   <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
-  <script src="js/graphics.js"></script>
-  <script src="js/game.js"></script>
-  <script>
+  <script type="text/javascript" src="js/game.js"></script>
+  <script type="text/javascript" src="js/graphics.js"></script>
+  <script type="text/javascript">
       var counter = 0;
       countDown();
-
       
   </script>
    </body>

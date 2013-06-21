@@ -133,7 +133,7 @@ for(var n = 0; n < numInBlock; n++) {
              y: ymult2 * 40,
             fill: 'black',
             text: generatedString[i],
-            name: 'text',
+            name: 'text2',
             fontSize: 20,
             fontFamily: 'Courier',  //maybe Inconsolata
           });
@@ -143,19 +143,24 @@ for(var n = 0; n < numInBlock; n++) {
       stage.add(layer2);
   }
 //end of the opponent's text
-var alltextOpp = stage.get('.text');  //an array of opp's current block char
+var alltextOpp = stage.get('.text2');  //an array of opp's current block char
 
 //oppPosIndex is the position in the block (not for all blocks)
 updateOpp = function(oppPosIndex) {
-  if(oppPosIndex > oppPos) {
-    for(var n=oppPos; n < oppPosIndex; n++) {
-      word = alltextOpp[n];
+ // if(oppPosIndex > oppPos) {
+  //  for(var n=oppPos; n < oppPosIndex; n++) {
+  //    word = alltextOpp[n];
+  //    word.setFill('green');
+  //    word.setFontStyle('bold italic');
+  //  alltextOpp[oppPosIndex].setFill('red');
+  //  }
+
+    for(var n=0; n < oppPosIndex; n++) {
+      var word = alltextOpp[n];
       word.setFill('green');
       word.setFontStyle('bold italic');
-    alltextOpp[oppPosIndex].setFill('red');
+    alltextOpp[oppPosIndex+1].setFill('red');
     }
-
-  }
 }
 
     var cur = 0;
@@ -190,6 +195,7 @@ updateOpp = function(oppPosIndex) {
                    correct.stop();
                   generatedString = generatedString.substring(1);
                   //console.log(generatedString); 
+                  playerPos++;
                }
                else {
                 //wave.start();
@@ -197,8 +203,8 @@ updateOpp = function(oppPosIndex) {
                 console.log('Incorrect: ' + numincorrect);
                 // data should include:
 
-     // data = { 'block': '', 'index': playerPos, 'health': playerHealth};
-     // sendGameStatusMessage(data);
+                  data = { 'block': '', 'index': playerPos, 'health': playerHealth};
+                  sendGameStatusMessage(data);
                  }
 
             }); 

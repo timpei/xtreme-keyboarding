@@ -316,13 +316,50 @@
       </center>
 
   <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.min.js"></script>
-  <script src="/js/graphics.js"></script>
-  <script src="/js/gameMulti.js"></script>
+  <script type="text/javascript" src="/js/gameMulti.js"></script>
       <script>  // <script defer="defer"> wait for the entire page to load before displaying
+   function decreaseHealth(player){ //player is an integer; either 1 or 2
+      if(player == 1){
+         $("#firstInnerBar")[0].style.width = parseFloat($("#firstInnerBar")[0].style.width) - 5 + "%";
+         if(parseFloat($("#firstInnerBar")[0].style.width) > 75){
+            $("#firstInnerBar")[0].style.backgroundColor = "#00CC99";
+         } else if(parseFloat($("#firstInnerBar")[0].style.width) > 30){
+            $("#firstInnerBar")[0].style.backgroundColor = "orange";
+         } else {
+            $("#firstInnerBar")[0].style.backgroundColor = "red";
+            if(parseFloat($("#firstInnerBar")[0].style.width) == 0){
+               $(".textbox")[0].innerHTML = "<h1>Game Over!</h1>";
+               sendEndGameMessage("lose");
+            }
+         }
+         
+      } else {
+         $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
+         if(parseFloat($("#secondInnerBar")[0].style.width) > 75){
+            $("#secondInnerBar")[0].style.backgroundColor = "#00CC99";
+         } else if(parseFloat($("#secondInnerBar")[0].style.width) > 30){
+            $("#secondInnerBar")[0].style.backgroundColor = "orange";
+         } else {
+            $("#secondInnerBar")[0].style.backgroundColor = "red";
+         }
+         }
+      }
+
+   function updateProgress(player){
+      if(player == 1){
+         if(parseFloat($("#progress1")[0].innerText) < 100)
+            $("#progress1")[0].innerText = parseFloat($("#progress1")[0].innerText) + 10 + "%";
+      } else {
+         if(parseFloat($("#progress2")[0].innerText) < 100)
+            $("#progress2")[0].innerText = parseFloat($("#progress2")[0].innerText) + 10 + "%";
+      }
+   }
+
 
 var state = {
  game_key: '{{ game_key }}',
- me: '{{ me }}'
+ me: '{{ me }}',
+ init: true
 };
 
 
@@ -338,25 +375,19 @@ updateGame = function() {
    }
    else {
       display['container'] = 'block';
-      countDown();
+      if (state.init) {
+         countDown();
+         state.init = false;
+      }
    }
 
    for (var label in display) {
       document.getElementById(label).style.display = display[label];
    }
 
-   
-     //char at this pos should be red, everything before is green
-     var oppPos = state.opponentPointerIndex;
-     if(oppPos > oppPos) {
-    for(var n=oppPos; n < oppPos; n++) {
-      word = alltextOpp[n];
-      word.setFill('green');
-      word.setFontStyle('bold italic');
-    alltextOpp[oppPosIndex].setFill('red');
-    }
-  }
-   
+   if (state.opponentPointerIndex) {
+      updateOpp(state.opponentPointerIndex);
+   }
 };
 
 // poweruptarget can either be "you" or "opponent"
@@ -367,8 +398,7 @@ doPowerUp = function(powerUpType, powerUpTarget) {
 
 // status can either be "win" or "lose" for current player
 gameOver = function(status) {
-   // put code here
-   console.log("GAMEOVER: ", status)
+   $(".textbox")[0].innerHTML = "<h1>Game Over!</h1>";
 }
 
 sendMessage = function(path, opt_param) {

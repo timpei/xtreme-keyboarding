@@ -7,9 +7,11 @@
                   $("#firstInnerBar")[0].style.backgroundColor = "orange";
                } else {
                   $("#firstInnerBar")[0].style.backgroundColor = "red";
+                  if(parseFloat($("#firstInnerBar")[0].style.width) == 0){
+                     $(".textbox")[0].innerHTML = "<h1>YOU LOSE!</h1>";
+                  }
                }
-
-                   
+               
             } else {
                $("#secondInnerBar")[0].style.width = parseFloat($("#secondInnerBar")[0].style.width) - 5 + "%";
                if(parseFloat($("#secondInnerBar")[0].style.width) > 75){
@@ -19,8 +21,8 @@
                } else {
                   $("#secondInnerBar")[0].style.backgroundColor = "red";
                }
+               }
             }
-         }
 
          function updateProgress(player){
             if(player == 1){

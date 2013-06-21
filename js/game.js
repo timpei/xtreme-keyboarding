@@ -1,14 +1,14 @@
-var singlePlayer = false;
+var singlePlayer = true;
 var startgame = false;
 var playerPos = 0;  //ABSOLUTE POSITION IN THE TEXT
 var oppPos = 0; //what player sees as the opp's pos
 var playerHealth = 10;
 var counter = 0;
 
-countDown = function() {
 
+countDown = function() {
           function printBoard(str){
-             $(".countdownText").text(str);
+            $(".countdownText").text(str);
           }
           
           var i = 5;
@@ -28,7 +28,7 @@ countDown = function() {
             i--;
           }, 1000);
           console.log(startgame);
-        }
+}
 
 
 //oppPosIndex is the position in the block (not for all blocks)
@@ -68,9 +68,29 @@ waiting.start();
 circle.on('mousedown touchstart', function() {
 waiting.stop();
  console.log('pressdown');
-
      
-  var generatedStringOrig = "Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three years ago, people have been searching for its resting place.Ever since the Griffin, a foot-long ship built by the French explorer Rene-Robert Cavelier, Sieur de La Salle, in his quest to find the mouth of the Mississippi River, disappeared somewhere on the Great Lakes three hundred years ago, people have been searching for its resting place.";
+  updateblock = function() {  
+      var x = playerPos;
+      console.log('x: ' + x);
+      for(var n = 0; n < numInBlock; n++) {    
+        word = alltext[n];
+        word.setText(generatedString[n]);
+        if(n==0) {
+          word.setFill('red');
+          console.log('red block');
+        }
+        else {
+          word.setFill('black');
+          console.log('turn black');
+          word.setFontStyle('normal');
+        } 
+        x++;
+        //word.setFontStye('normal');
+      }
+      cur=0;
+      $('.progressText')[0].innerText = parseFloat($('.progressText')[0].innerText) + 1;
+    }
+var generatedStringOrig = "I am a knight. To be precise, I am the Sun Knight of the Church of the God of Light. The Church of the God of Light worships and serves the God of Light, and it is one of the three largest religions on this continent. But although it may only be ranked third in terms of size, if we’re talking in terms of history, then there is no other religious organization that can compare with the Church of the God of Light. As everyone knows, the Church of the God of Light consists of the Holy Temple and the Sanctuary of Light, which are organized along militaristic and clerical lines respectively. Naturally, I am a knight of the Holy Temple, of which the twelve captains of the holy knights are a part, and whose positions are passed down through the generations. Since ancient times, each captain of the holy knights has led a company of knights. For example, I am the Sun Knight, so I should be leading the Sun Knight Company. However, the chances of war breaking out are extremely low during these peaceful times. Without wars, the knight companies cannot mobilize; if the knight companies cannot mobilize, then they cannot plunder, pillage, or ransack under the cover of the chaos of war…! In any case, at the current moment the Holy Temple is unable to afford the upkeep for twelve full companies of knights. Thus, they decided to simply put together all the knights instead and form a Holy Temple Company, which can be further divided into twelve platoons. As for which platoon reports to me, it’s obviously the Sun Knight Platoon. The original Sun Knight Company may have shrunk into the Sun Knight Platoon, but of all captains of the holy knights, this change has the least impact on me. That’s because as the leader of the Twelve Holy Knights, I am naturally the commander of the entire Holy Temple Company. As long as I am a company commander, who cares if it’s the Sun Knight Company or the Holy Temple Company, right?";
 
   var generatedString = generatedStringOrig;
     
@@ -188,6 +208,13 @@ var alltextOpp = stage.get('.text');  //an array of opp's current block char
                
                if(typed == generatedString.charAt(0)) {
                 //change the color of the current character to green if correct 
+                   if(playerPos%(numInBlock-1) == 0 && playerPos > 0) {
+                     //layer.clear();  //
+                      updateblock();
+                        console.log("end of blocK");
+                    }
+
+
                    correct.start();
                    correct.stop();
                   generatedString = generatedString.substring(1);
@@ -200,10 +227,11 @@ var alltextOpp = stage.get('.text');  //an array of opp's current block char
                   numincorrect++;
                 console.log('Incorrect: ' + numincorrect);
                 counter = 0;
+                decreaseHealth(1);
                 // data should include:
 
       data = { 'block': '', 'index': playerPos, 'health': playerHealth};
-      sendGameStatusMessage(data);
+      //sendGameStatusMessage(data);
                  }
                  console.log($(".comboText")[0].innerText);
                  $(".comboBox")[0].innerText = counter;
@@ -211,3 +239,4 @@ var alltextOpp = stage.get('.text');  //an array of opp's current block char
 
             }); 
  });  //end of event listener
+

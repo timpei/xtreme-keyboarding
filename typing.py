@@ -188,7 +188,7 @@ class MainPage(webapp2.RequestHandler):
                     game.userB = user
                     game.put()
 
-            game_link = 'http://localhost:8080/game?g=' + game_key
+            game_link = 'http://xtreme-keyboarding.appspot.com/game?g=' + game_key
 
             if game:
                 token = channel.create_channel(user.user_id() + game_key)
