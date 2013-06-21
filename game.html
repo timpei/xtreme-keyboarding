@@ -573,6 +573,12 @@ doPowerUp = function(powerUpType, powerUpTarget) {
    console.log(powerUpType, powerUpTarget);
 }
 
+// status can either be "win" or "lose" for current player
+gameOver = function(status) {
+   // put code here
+   console.log("GAMEOVER: ", status)
+}
+
 sendMessage = function(path, opt_param) {
    path += '?g=' + state.game_key;
    if (opt_param) {
@@ -605,6 +611,15 @@ sendPowerUpMessage = function(data) {
    xhr.send(JSON.stringify(data));
 }
 
+// data should include:
+// win or lose
+sendEndGameMessage = function(status) {
+   var xhr = new XMLHttpRequest();
+   xhr.open('POST', '/end?g=' + state.game_key, true);
+   xhr.setRequestHeader('Content-Type', 'application/json');
+   xhr.send(status);
+}
+
 onOpened = function() {
    sendMessage('/opened');
 };
@@ -614,7 +629,13 @@ onMessage = function(m) {
    state.userA = newState.userA || state.userA;
    state.userB = newState.userB || state.userB;
 
-   if (!newState.powerUpType) {
+   if (newState.powerUpType) {
+      doPowerUp(newState.powerUpType, newState.powerUpTarget);
+   }
+   else if (newState.endGame){
+      gameOver(newState.endGame)
+   }
+   else {
       if (state.userB == state.me) {
          if (newState.userABlock != "")
             state.opponentBlock = newState.userABlock;
@@ -632,9 +653,6 @@ onMessage = function(m) {
       updateGame();
    }
 
-   else {
-      doPowerUp(newState.powerUpType, newState.powerUpTarget);
-   }
 }
 
 openChannel = function() {

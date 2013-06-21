@@ -97,6 +97,20 @@ class GameUpdater():
     if player.user_id() == allMessage['userB']:
       channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
 
+  def send_end_game(self, status):
+    player = users.get_current_user();
+    allMessage = self.get_game_message(jsonResult = False)
+
+    if status == 'win':
+      message = {'endGame': 'lose'}
+    else:
+      message = {'endGame': 'win'}
+
+    if player.user_id() == allMessage['userA']:
+      channel.send_message(self.game.userB.user_id() + self.game.key().id_or_name(), json.dumps(message))
+    if player.user_id() == allMessage['userB']:
+      channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
+
   def sync_opp_data(self, block, index, health):
     player = users.get_current_user();
     if player == self.game.userA:
@@ -202,6 +216,16 @@ class PowerupPage(webapp2.RequestHandler):
         affectedUser = request['user']
         ); 
 
+class EndGamePage(webapp2.RequestHandler):
+  def post(self):
+    game = GameFromRequest(self.request).get_game()
+    user = users.get_current_user()
+    request = self.request.body
+    if game and user:
+      GameUpdater(game).send_end_game(
+        status = request
+        );
+
 
 
 app = webapp2.WSGIApplication([
@@ -210,5 +234,6 @@ app = webapp2.WSGIApplication([
     ('/game', MainPage),
     ('/opened', OpenedPage),
     ('/sync', SyncPage),
-    ('/powerup', PowerupPage)
+    ('/powerup', PowerupPage),
+    ('/end', EndGamePage)
 ])
