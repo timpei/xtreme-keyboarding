@@ -13,6 +13,16 @@ class Game(db.Model):
   """All the data we store for a game"""
   userA = db.UserProperty()
   userB = db.UserProperty()
+  userABlock = db.StringProperty()
+  userBBlock = db.StringProperty()
+  userAPointerIndex = db.IntegerProperty()
+  userBPointerIndex = db.IntegerProperty()
+  userAPowerupType = db.StringProperty()
+  userBPowerupType = db.StringProperty()
+  userAPowerupDuration = db.IntegerProperty()
+  userBPowerupDuration = db.IntegerProperty()
+  userAHealth = db.IntegerProperty()
+  userBHealth = db.IntegerProperty()
   winner = db.StringProperty()
 
 class GameUpdater():
@@ -21,14 +31,23 @@ class GameUpdater():
   def __init__(self, game):
     self.game = game
 
-  def get_game_message(self):
+  def get_game_message(self, jsonResult = True):
     gameUpdate = {
       'userA': self.game.userA.user_id(),
       'userB': '' if not self.game.userB else self.game.userB.user_id(),
+      'userABlock': self.game.userABlock,
+      'userBBlock': self.game.userBBlock,
+      'userAPointerIndex': self.game.userAPointerIndex,
+      'userBPointerIndex': self.game.userBPointerIndex,
+      'userAHealth': self.game.userAHealth,
+      'userBHealth': self.game.userBHealth,
       'winner': self.game.winner,
     }
 
-    return json.dumps(gameUpdate)
+    if (jsonResult):
+      gameUpdate = json.dumps(gameUpdate)
+
+    return gameUpdate
 
   def send_update(self):
     message = self.get_game_message()
@@ -36,21 +55,42 @@ class GameUpdater():
     if self.game.userB:
       channel.send_message(self.game.userB.user_id() + self.game.key().id_or_name(), message)
 
-  def check_win(self):
-    return
+  def send_opp_data(self, player):
+    allMessage = self.get_game_message(jsonResult = False)
+    print allMessage
+    print player.user_id()
+    if player.user_id() == allMessage['userA']:
+      message = {
+        'userABlock': allMessage['userABlock'],
+        'userAPointerIndex': allMessage['userAPointerIndex'],
+        'userAHealth': allMessage['userAHealth']
+      }
+      channel.send_message(self.game.userB.user_id() + self.game.key().id_or_name(), json.dumps(message))
+    else:
+      message = {
+        'userBBlock': allMessage['userBBlock'],
+        'userBPointerIndex': allMessage['userBPointerIndex'],
+        'userBHealth': allMessage['userBHealth']
+      }
+      channel.send_message(self.game.userA.user_id() + self.game.key().id_or_name(), json.dumps(message))
 
-  def make_move(self, position, user):
-    if position >= 0 and user == self.game.userX or user == self.game.userO:
-      if self.game.moveX == (user == self.game.userX):
-        boardList = list(self.game.board)
-        if (boardList[position] == ' '):
-          boardList[position] = 'X' if self.game.moveX else 'O'
-          self.game.board = "".join(boardList)
-          self.game.moveX = not self.game.moveX
-          self.check_win()
-          self.game.put()
-          self.send_update()
-          return
+  def sync_opp_data(self, block, index, health):
+    player = users.get_current_user();
+    if player == self.game.userA:
+      if block:
+        self.game.userABlock = block
+      self.game.userAPointerIndex = index
+      self.game.userAHealth = health
+      self.game.put()
+      self.send_opp_data(player)
+    elif player == self.game.userB:
+      if block:
+        self.game.userBBlock = block
+      self.game.userBPointerIndex = index
+      self.game.userBHealth = health
+      self.game.put()
+      self.send_opp_data(player)
+
 
 class GameFromRequest():
   game = None;
@@ -111,9 +151,36 @@ class MainPage(webapp2.RequestHandler):
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
+class SyncPage(webapp2.RequestHandler):
+  def post(self):
+    game = GameFromRequest(self.request).get_game()
+    user = users.get_current_user()
+    request = json.loads(self.request.body)
+    if game and user:
+        GameUpdater(game).sync_opp_data(
+          block = request['block'],
+          index = request['index'],
+          health = request['health']
+          );
+
+
+class PowerupPage(webapp2.RequestHandler):
+  def post(self):
+    game = GameFromRequest(self.request).get_game()
+    user = users.get_current_user()
+    request = json.loads(self.request.body)
+    if game and user:
+      GameUpdater(game).send_powerup(
+        type = request['type'],
+        user = request['user']
+        ); 
+
+
 
 app = webapp2.WSGIApplication([
     ('/', IntroPage),
     ('/game', MainPage),
     ('/opened', OpenedPage),
+    ('/sync', SyncPage),
+    ('/powerup', PowerupPage)
 ])
