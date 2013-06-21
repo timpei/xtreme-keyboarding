@@ -347,6 +347,10 @@ updateGame = function() {
    for (var label in display) {
       document.getElementById(label).style.display = display[label];
    }
+   //char at this pos should be red, everything before is green
+   var oppPos = state.opponentPointerIndex;
+
+
 };
 
 // poweruptarget can either be "you" or "opponent"
