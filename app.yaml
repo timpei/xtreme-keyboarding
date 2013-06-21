@@ -9,8 +9,12 @@ handlers:
   static_dir: assets
 - url: /js
   static_dir: js
+- url: /rules
+  static_dir: rules.html
 - url: .*
   script: typing.app
+
+  
 
 libraries:
 - name: webapp2
