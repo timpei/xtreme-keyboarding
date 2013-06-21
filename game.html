@@ -322,7 +322,8 @@
         
 var state = {
  game_key: '{{ game_key }}',
- me: '{{ me }}'
+ me: '{{ me }}',
+ init: false,
 };
 
 updateGame = function() {
@@ -337,7 +338,10 @@ updateGame = function() {
    }
    else {
       display['container'] = 'block';
-      countDown();
+      if (!state.init) {
+         countDown();
+         state.init = true;
+      }
    }
 
    for (var label in display) {
