@@ -15,7 +15,7 @@
          #element24{
              position:relative;
              left:650px;
-             bottom:210px;
+             bottom:235px;
          }
 
          h1{
@@ -26,10 +26,10 @@
 
         #title{
             position:relative;
-            font-size:50px;
+            font-size:60px;
             width:500px;
             right:30px;
-            bottom:101px;
+            bottom:120px;
         }
 
          #container{
@@ -262,7 +262,7 @@
       <div id="outerwrapper">
       <div id="header"></div>
       <div id="trapezoid">
-          <a href='/' style="text-decoration:none"><h1 id="title">Xtreme Keyboarding</h1></a>
+          <h1 id="title">XTreme Typing</h1>
           <h1 id="element24">&lt;24/&gt;</h1>
       </div>
       </div>
@@ -319,11 +319,9 @@
   <script src="/js/game.js"></script>
       <script>  // <script defer="defer"> wait for the entire page to load before displaying
 
-        
 var state = {
  game_key: '{{ game_key }}',
- me: '{{ me }}',
- init: false,
+ me: '{{ me }}'
 };
 
 updateGame = function() {
@@ -338,10 +336,7 @@ updateGame = function() {
    }
    else {
       display['container'] = 'block';
-      if (!state.init) {
-         countDown();
-         state.init = true;
-      }
+      countDown();
    }
 
    for (var label in display) {
@@ -349,8 +344,7 @@ updateGame = function() {
    }
    //char at this pos should be red, everything before is green
    var oppPos = state.opponentPointerIndex;
-
-
+   //updateOpp(oppPos); 
 };
 
 // poweruptarget can either be "you" or "opponent"
